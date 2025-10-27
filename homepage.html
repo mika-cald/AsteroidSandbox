@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<title>Asteroids</title>
+		<link href="bootstrap/css/bootstrap.min.css" rel="stylesheet">
+        <link href="styles.css" rel="stylesheet">
+		<script src="bootstrap/js/bootstrap.bundle.min.js"></script>
+	</head>
+	<body id="game-screen">
+        <div id="stars-container"></div>
+
+		<div id = "menu-screen">
+        	<h1>Asteroids</h1>
+        	<div class="menu">
+            	<button class="btn btn-transparent btn-lg play-btn">Play</button>
+            	<button class="btn btn-transparent btn-lg high-scores-btn">High Scores</button>
+        	</div>
+		</div>
+
+		<div id="high-scores-screen" class="high-scores" style="display: none">
+			<h2>High Scores</h2>
+			<ol id="score-list">
+				<li>Name: <span id="hs1">---</span> points</li>
+				<li>Name: <span id="hs2">---</span> points</li>
+				<li>Name: <span id="hs3">---</span> points</li>
+			</ol>
+		</div>
+	
+		<div id="ship">
+			<img src="asset-files/player_ship/Main Ship/Main Ship - Bases/Main Ship - Base - Full health.png">
+			<div id="propellant"></div>
+		</div>
+
+		<div id="restart-game" style="display: none">
+			<h3>Your ship has been destroyed!</h3>
+			<div class="restart">
+				<button class="btn btn-transparent btn-lg restart-btn">Restart</button>
+			</div>
+		</div>
+
+		<script src="stars.js" defer></script>
+		<script src="main.js" defer></script>
+		<script src="asteroids.js" defer></script>
+		<div id="score-display">
+			Score: <span id="score">0</span>
+		</div>
+	</body>
+</html>
