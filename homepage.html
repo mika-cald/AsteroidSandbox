@@ -22,15 +22,18 @@
 		<div id="high-scores-screen" class="high-scores" style="display: none">
 			<h2>High Scores</h2>
 			<ol id="score-list">
-				<li>Name: <span id="hs1">---</span> points</li>
-				<li>Name: <span id="hs2">---</span> points</li>
-				<li>Name: <span id="hs3">---</span> points</li>
+				<li><span id="hs1">Name: ---</span> points</li>
+				<li><span id="hs2">Name: ---</span> points</li>
+				<li><span id="hs3">Name: ---</span> points</li>
 			</ol>
 		</div>
 	
 		<div id="ship">
 			<img src="asset-files/player_ship/Main Ship/Main Ship - Bases/Main Ship - Base - Full health.png">
-			<div id="propellant"></div>
+			<div id="engine">
+				<img src="asset-files/player_ship/Main Ship/Main Ship - Engine Effects/Base Engine - Idle.gif">
+			</div>
+			<!-- <div id="propellant"></div>   -->
 		</div>
 
 		<div id="restart-game" style="display: none">
@@ -38,6 +41,17 @@
 			<div class="restart">
 				<button class="btn btn-transparent btn-lg restart-btn">Restart</button>
 			</div>
+		</div>
+
+		<div id="end-screen" style="display: none;">
+			<h2>Game Over!</h2>
+			<p>Your final score: <span id="final-score">0</span></p>
+			<div class="nickname-input">
+				<label for="nickname">Enter your nickname:</label>
+				<input type="text" id="nickname" maxlength="12" placeholder="Your name">
+			</div>
+    		<button class="btn btn-transparent btn-lg" id="submit-score-btn">Submit Score</button>
+    		<button class="btn btn-transparent btn-lg" id="back-to-menu-btn">Back to Menu</button>
 		</div>
 
 		<script src="stars.js" defer></script>

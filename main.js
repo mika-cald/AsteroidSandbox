@@ -19,12 +19,18 @@ const playBtn = document.querySelector(".play-btn");                // "Play" bu
 const highScoresBtn = document.querySelector(".high-scores-btn");   // Button to view high scores
 const highScoresScreen = document.getElementById("high-scores-screen"); // High scores list section
 const ship = document.getElementById("ship");                       // The player's ship (a div containing an <img>)
+const engine = document.getElementById("engine");
 const propellantFlame = document.getElementById("propellant");      // The glowing purple flame under the ship
 const scoreDisplay = document.getElementById("score-display");      // Small score counter in the corner
 const gameRestart = document.getElementById("restart-game");        // “Game Over” overlay section
 const rstBtn = document.querySelector(".restart-btn");              // Restart button element
 const scoreElem = document.getElementById("score");                 // <span> element that shows numeric score
 
+const endScreen = document.getElementById("end-screen");
+const finalScoreElem = document.getElementById("final-score");
+const submitScoreBtn = document.getElementById("submit-score-btn");
+const backToMenuBtn = document.getElementById("back-to-menu-btn");
+const nicknameInput = document.getElementById("nickname");
 
 // ================== GAME STATE VARIABLES ==================
 // These variables store all data that describes the current "world state" of the game.
@@ -66,6 +72,21 @@ document.body.appendChild(livesDisplay);             // Add it to the document s
 // Function to update the text of the lives counter
 function updateLives() {
   livesDisplay.textContent = `Lives: ${lives}`;
+  const img = ship.querySelector("img");
+  switch (true) {
+    case lives == 3:
+      img.src = "asset-files/player_ship/Main Ship/Main Ship - Bases/Main Ship - Base - Full health.png";
+      break;
+    case lives == 2:
+      img.src = "asset-files/player_ship/Main Ship/Main Ship - Bases/Main Ship - Base - Slight damage.png";
+      break;
+    case lives == 1:
+      img.src = "asset-files/player_ship/Main Ship/Main Ship - Bases/Main Ship - Base - Damaged.png";
+      break;
+    case lives == 0:
+      img.src = "asset-files/player_ship/Main Ship/Main Ship - Bases/Main Ship - Base - Very damaged.png";
+      break;
+  }
 }
 updateLives(); // Initialize with the starting number of lives
 
@@ -100,12 +121,16 @@ function collisionWithAsteroids() {
 // ================== SHIP UPDATE ==================
 // Handles rotation, thrust, physics, and screen wrapping for the ship.
 
+let spriteChange = 0;
+
 function updateShip(deltaSec = 0) {
+  const engineImg = engine.querySelector("img");
   // deltaSec = time difference since last frame in seconds.
   // It keeps movement consistent on all computers (even if FPS changes).
 
   // Only apply controls if the game is active
   if (gameRunning) {
+    engineImg.style.opacity = "1";
 
     // A/D rotate the ship left/right. Rotation speed is scaled by deltaSec.
     if (keys["a"]) angle -= rotationSpeed * deltaSec;
@@ -118,17 +143,30 @@ function updateShip(deltaSec = 0) {
       velY -= Math.cos(angle * Math.PI / 180) * thrust * deltaSec;
 
       // Make the flame visible and flicker by changing its height slightly.
-      propellantFlame.style.opacity = "1";
-      propellantFlame.style.height = 25 + Math.random() * 15 + "px";
-      propellantFlame.style.transform = "translate(-50%, 0)";
+      // propellantFlame.style.opacity = "1";
+      // propellantFlame.style.height = 25 + Math.random() * 15 + "px";
+      // propellantFlame.style.transform = "translate(-50%, 0)";
+      engineImg.style.opacity = "1";
+      if (spriteChange !== 1) {
+        engineImg.src = "asset-files/player_ship/Main Ship/Main Ship - Engine Effects/Base Engine - Powering.gif";
+        spriteChange = 1;
+      }
+
     } else {
       // Hide flame when not pressing thrust.
-      propellantFlame.style.opacity = "0";
+      //propellantFlame.style.opacity = "0";
+      engineImg.style.opacity = "1";
+
+      if (spriteChange !== 0) {
+        engineImg.src = "asset-files/player_ship/Main Ship/Main Ship - Engine Effects/Base Engine - Idle.gif";
+        spriteChange = 0;
+      }
     }
 
   } else {
     // When not in-game, flame should always be invisible.
-    propellantFlame.style.opacity = "0";
+    //propellantFlame.style.opacity = "0";
+    engineImg.style.opacity = "0";
   }
 
   // --- Apply friction ---
@@ -162,6 +200,11 @@ function fireProjectile() {
 
   const projectile = document.createElement("div"); // Create new <div> for the projectile
   projectile.className = "projectile";              // Assign projectile CSS
+  const projectileImg = document.createElement("img");
+  projectileImg.src = "asset-files/player_ship/Main ship weapons/Main ship weapon - Projectile - Rocket.gif";
+  projectileImg.className = "asteroid-img";
+  projectile.appendChild(projectileImg);
+
 
   // Calculate where the projectile starts — just in front of the ship’s nose.
   const rad = angle * Math.PI / 180; // Convert angle to radians
@@ -239,8 +282,21 @@ function checkProjectileCollisions() {
 
         // Remove the entire asteroid that was hit
         const asteroidWrap = a.closest(".asteroid");
-        if (asteroidWrap) asteroidWrap.remove();
+        
+        if (asteroidWrap) {
+          const asteroidImg = asteroidWrap.querySelector(".asteroid-img");
+          if (asteroidImg) {
+            const newImg = asteroidImg.cloneNode();
+            newImg.src = `asset-files/enviroment/Asteroids/Asteroid 01 - Explode.gif?${Date.now()}`;
+            asteroidImg.replaceWith(newImg);
+          }
 
+          const hitbox = asteroidWrap.querySelector(".asteroid-hitbox");
+          if (hitbox) hitbox.remove();
+
+          setTimeout(() => asteroidWrap.remove(), 700);
+        }
+ 
         // Add points to score
         let score = parseInt(scoreElem.textContent) || 0;
         score += projectileDamage;
@@ -318,15 +374,25 @@ function shipDestroyed() {
   Object.keys(keys).forEach(k => (keys[k] = false));
 
   // Remove all asteroids
+  activateAsteroids(false);
   clearAsteroids();
 
   // Hide flame
-  propellantFlame.style.opacity = "0";
+  ship.style.display = "none";
+  engine.style.display = "none";
+  //propellantFlame.style.opacity = "0";
 
   // Show “Game Over” overlay
-  gameRestart.style.display = "block";
-  scoreDisplay.style.display = "block";
-  livesDisplay.style.display = "block";
+  // gameRestart.style.display = "block";
+  // scoreDisplay.style.display = "block";
+  // livesDisplay.style.display = "block";
+
+  // New
+  endScreen.style.display = "block";
+  scoreDisplay.style.display = "none";
+  livesDisplay.style.display = "none";
+  finalScoreElem.textContent = scoreElem.textContent;
+  nicknameInput.value = "";
 }
 
 
@@ -335,6 +401,7 @@ function shipDestroyed() {
 
 function resetGame() {
   cancelAnimationFrame(loopId);
+  activateAsteroids(true);
   clearAsteroids();
   lastTime = 0;
   gameRunning = false;
@@ -355,6 +422,8 @@ function resetGame() {
 
   // Hide game elements
   ship.style.display = "none";
+  engine.style.display = "none";
+
   scoreDisplay.style.display = "none";
   livesDisplay.style.display = "none";
   gameRestart.style.display = "none";
@@ -373,6 +442,7 @@ function startGame() {
 
   // Show gameplay elements
   ship.style.display = "block";
+  engine.style.display = "block";
   scoreDisplay.style.display = "block";
   livesDisplay.style.display = "block";
 
@@ -381,6 +451,7 @@ function startGame() {
   isInvincible = false;
   updateLives();
   scoreElem.textContent = "0";
+  activateAsteroids(true);
   clearAsteroids();
   spawnAsteroids(); // Create a random asteroid field
   projectiles = [];
@@ -397,6 +468,7 @@ function startGame() {
 // Return to main menu (used by pressing Escape)
 function backToMenu() {
   cancelAnimationFrame(loopId);
+  activateAsteroids(false);
   clearAsteroids();
   lastTime = 0;
   gameRunning = false;
@@ -416,11 +488,16 @@ function backToMenu() {
 
   // Hide gameplay UI
   ship.style.display = "none";
+  engine.style.display = "none";
   scoreDisplay.style.display = "none";
   livesDisplay.style.display = "none";
 
   // Show menu
   menuScreen.style.display = "block";
+
+  // Hide other screens
+  highScoresScreen.style.display = "none";
+  endScreen.style.display = "none";
 }
 
 
@@ -447,9 +524,73 @@ document.addEventListener("keyup", e => (keys[e.key.toLowerCase()] = false));
 playBtn.addEventListener("click", startGame);   // Start game from menu
 rstBtn.addEventListener("click", resetGame);    // Restart game after death
 highScoresBtn.addEventListener("click", () => { // Show high score list
+  updateHighScoresDisplay();
   menuScreen.style.display = "none";
   highScoresScreen.style.display = "block";
 });
 
+///////////////////////. all below add the code for UDI #10
+// Submit score
+submitScoreBtn.addEventListener("click", () => {
+    const nickname = nicknameInput.value.trim() || "Player";
+    const score = parseInt(finalScoreElem.textContent);
 
+    saveHighScore(nickname, score);
+    //alert(`Score saved! ${nickname} - ${score} points`);
 
+    goToMenu();
+});
+
+// Back to menu
+backToMenuBtn.addEventListener("click", goToMenu);
+
+function goToMenu() {
+    endScreen.style.display = "none";
+    menuScreen.style.display = "block";
+    ship.style.display = "none";
+    engine.style.display = "none";
+    scoreDisplay.style.display = "none";
+    livesDisplay.style.display = "none";
+
+    // Reset game state
+    resetGameState();
+}
+
+// Reset state helper (does not start the game)
+function resetGameState() {
+    cancelAnimationFrame(loopId);
+    activateAsteroids(false);
+    clearAsteroids();
+    lastTime = 0;
+    gameRunning = false;
+    isInvincible = false;
+    lives = 3;
+    updateLives();
+    scoreElem.textContent = "0";
+
+    shipX = window.innerWidth / 2;
+    shipY = window.innerHeight / 2;
+    velX = velY = 0;
+    angle = 0;
+
+    projectiles.forEach(p => p.remove());
+    projectiles = [];
+}
+
+// High score storage
+function saveHighScore(name, score) {
+    const highScores = JSON.parse(localStorage.getItem("highScores") || "[]");
+    highScores.push({name, score});
+    highScores.sort((a,b) => b.score - a.score);
+    if (highScores.length > 3) highScores.length = 3; // keep top 3
+    localStorage.setItem("highScores", JSON.stringify(highScores));
+    updateHighScoresDisplay();
+}
+
+// Update high scores in menu
+function updateHighScoresDisplay() {
+    const highScores = JSON.parse(localStorage.getItem("highScores") || "[]");
+    for (let i = 0; i < 3; i++) {
+        document.getElementById(`hs${i+1}`).textContent = highScores[i] ? `${highScores[i].name}: ${highScores[i].score}` : "Name: ---";
+    }
+}

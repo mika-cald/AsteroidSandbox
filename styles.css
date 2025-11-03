@@ -114,9 +114,6 @@ h3 {
     transform: translate(-50%, -50%) rotate(0deg);
     width: 0;
     height: 0;
-    /* border-left: 15px solid transparent; */
-    /* border-right: 15px solid transparent; */
-    /* border-bottom: 35px solid white;  */
     display: none;
     z-index: 10;
     overflow: visible;
@@ -126,7 +123,7 @@ h3 {
     width: 75px;
     height: 75px;
     display: block;
-    position: relative;
+    position: absolute;
     top: -37.5px;
     left: -37.5px;
 }
@@ -173,11 +170,6 @@ h3 {
   display: none;
 }
 
-/* Asteroids */
-.asteroid {
-  filter: drop-shadow(0 0 1px white);
-}
-
 .lives-display {
   position: absolute;
   top: 20px;
@@ -191,22 +183,24 @@ h3 {
 
 .projectile {
   position: absolute;
-  width: 2px;
+  background-image: url('asset-files/player_ship/Main\ ship\ weapons/Main ship weapon - Projectile Rockets');
+  /* width: 2px;
   height: 16px;
   border-radius: 2px;
   background: limegreen;
-  box-shadow: 0 0 8px limegreen;
+  box-shadow: 0 0 8px limegreen; */
   transform-origin: center center;
   z-index: 15;
 }
 
+/* Asteroids */
 .asteroid {
   position: absolute;
   width: 150px;
   height: 150px;
   z-index: 10;
   pointer-events: none;
-  filter: drop-shadow(0 0 1px white);
+  /* filter: drop-shadow(0 0 1px white); */
 }
 
 .asteroid-img {
@@ -224,4 +218,53 @@ h3 {
   transform: translate(-50%, -50%);
   pointer-events: none;
   background: transparent;
+}
+
+/* End Screen */
+#end-screen {
+    display: none;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+    color: white;
+    font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+    background-color: rgba(0, 0, 0, 0.85);
+    padding: 40px 60px;
+}
+
+#end-screen h2 {
+    font-size: 80px;
+    margin: 0  0 20px 0;
+}
+
+#end-screen p {
+    font-size: 28px;
+    margin: 0 0 30px 0;
+}
+
+.nickname-input {
+    margin-bottom: 20px;
+}
+
+.nickname-input label {
+    display: block;
+    font-size: 20ox;
+    margin-bottom: 5px;
+}
+
+.nickname-input input {
+    font-size: 20px;
+    padding: 8px 12px;
+    border: 2px solid white;
+    border-radius: 10px;
+    background-color: black;
+    color: white;
+    width: 100%;
+    max-width: 250px;
+}
+
+#end-screen .btn {
+    margin: 10px 10px 0 10px;
 }
