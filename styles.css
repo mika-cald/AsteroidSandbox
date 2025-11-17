@@ -215,9 +215,25 @@ h3 {
   left: 50%;
   width: 40%;
   height: 40%;
+  border-radius: 45px;
   transform: translate(-50%, -50%);
   pointer-events: none;
   background: transparent;
+}
+
+.ufo-hitbox {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 40%;
+  height: 40%;
+  width: 50px;
+  height: 50px;
+  /* border-radius: 75px; */
+  transform: translate(-50%, -50%);
+  pointer-events: none;
+  background: transparent;
+  /* border: 1px solid red; */
 }
 
 /* End Screen */
@@ -267,4 +283,49 @@ h3 {
 
 #end-screen .btn {
     margin: 10px 10px 0 10px;
+}
+
+.music-btn {
+    position: fixed;
+    bottom: 10px;
+    left: 10px;
+    background: transparent;
+    border: 2px solid white;
+    border-radius: 10px;
+    padding: 8px 12px;
+    color: white;
+    z-index: 20;
+}
+
+.music-btn:hover {
+    background-color: rgba(255, 255, 255, 0.15);
+    border: 2px solid rgba(0, 0, 0, 0.85);
+}
+
+#icon-sound-on {
+    display: none;
+}
+
+@keyframes shake {
+    0% { transform: translate(1px, 1px); }
+    25% { transform: translate(-1px, -1px); }
+    50% { transform: translate(1px, -1px); }
+    75% { transform: translate(-1px, 1px); }
+    100% { transform: translate(0, 0); }
+}
+
+#death-fade {
+    position: fixed;
+    inset: 0;
+    background: black;
+    opacity: 0;
+    pointer-events: none;
+    z-index: 50;
+    transition: opacity 1.2s ease;
+}
+
+.ship-death-zoom {
+    transition: transform 1s ease, opacity 1s ease;
+    transform: scale(3);
+    opacity: 0;
 }

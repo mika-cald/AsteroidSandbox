@@ -70,10 +70,10 @@ function updateAsteroids(deltaSec = 0) {
     const size = asteroid.dataset.size; 
 
     // wrap around
-    if (x < -size) x = width;
-    if (x > width) x = -size;
-    if (y < -size) y = height;
-    if (y > height) y = -size;
+    if (x < -size * 0.75) x = width;
+    if (x > width) x = -size * 0.75 ;
+    if (y < -size * 0.75) y = height;
+    if (y > height) y = -size * 0.75;
 
     asteroid.style.left = x + "px";
     asteroid.style.top = y + "px";

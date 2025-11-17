@@ -32,6 +32,39 @@ const submitScoreBtn = document.getElementById("submit-score-btn");
 const backToMenuBtn = document.getElementById("back-to-menu-btn");
 const nicknameInput = document.getElementById("nickname");
 
+const musicToggle = document.getElementById("musicToggle");
+const iconOn = document.getElementById("icon-sound-on");
+const iconOff = document.getElementById("icon-sound-off");
+
+let musicEnabled = false;
+
+const MASTER_VOLUME  = 0.1;
+menuTrack.volume = MASTER_VOLUME;
+gameTrack.volume = MASTER_VOLUME;
+
+menuTrack.play().catch(() => {});
+
+musicToggle.addEventListener("click", () => {
+  musicEnabled = !musicEnabled;
+
+  if (musicEnabled) {
+    iconOn.style.display = "block";
+    iconOff.style.display = "none";
+
+    if (gameRunning) {
+      gameTrack.play();
+    } else {
+      menuTrack.play();
+    }
+  } else {
+    iconOn.style.display = "none";
+    iconOff.style.display = "block";
+
+    menuTrack.pause();
+    gameTrack.pause();
+  }
+})
+
 // ================== GAME STATE VARIABLES ==================
 // These variables store all data that describes the current "world state" of the game.
 // They are updated continuously as the player moves, shoots, or collides.
@@ -116,6 +149,17 @@ function collisionWithAsteroids() {
   }
   return false; // No collision
 }
+
+function collisionWithUfos() {
+  const shipRect = ship.getBoundingClientRect();                  // Get ship’s rectangle on the screen
+  const hitboxes = document.querySelectorAll(".ufo-hitbox");
+  for (const box of hitboxes) {
+    const rect = box.getBoundingClientRect();
+    if (rectsOverlap(shipRect, rect)) return true;                // If overlap found → collision occurred
+  }
+  return false; // No collision
+}
+
 
 
 // ================== SHIP UPDATE ==================
@@ -306,6 +350,57 @@ function checkProjectileCollisions() {
   });
 }
 
+function checkProjectileCollisionsWithUfos() {
+  const ufos = document.querySelectorAll(".ufo-hitbox");
+  [...projectiles].forEach(p => {
+    const pRect = p.getBoundingClientRect(); // Bullet’s rectangle
+    [...ufos].forEach(u => {
+      const aRect = u.getBoundingClientRect(); // Ufo's rectangle
+
+      // Basic AABB (Axis-Aligned Bounding Box) overlap test
+      const hit =
+        pRect.left < aRect.right &&
+        pRect.right > aRect.left &&
+        pRect.top < aRect.bottom &&
+        pRect.bottom > aRect.top;
+
+      if (hit) {
+        // Remove bullet on impact
+        p.remove();
+        projectiles = projectiles.filter(b => b !== p);
+
+        const ufoWrap = u.closest(".ufo");
+        if (!ufoWrap) return;
+
+        let health = parseInt(ufoWrap.dataset.health) || 3;
+        health--;
+        ufoWrap.dataset.health = health;
+        
+        if (health <= 0) {
+          ufoWrap.dataset.hit = "true";
+
+          const ufoImg = ufoWrap.querySelector(".ufo-img");
+          if (ufoImg) {
+            const newImg = ufoImg.cloneNode();
+            newImg.src = `asset-files/enemy_ships/fleet_1/Kla'ed/Destruction/Kla'ed - Battlecruiser - Destruction.gif?${Date.now()}`;
+            ufoImg.replaceWith(newImg);
+          }
+
+          const hitbox = ufoWrap.querySelector(".ufo-hitbox");
+          if (hitbox) hitbox.remove();
+
+          setTimeout(() => ufoWrap.remove(), 1400);
+        }
+ 
+        // Add points to score
+        let score = parseInt(scoreElem.textContent) || 0;
+        score += projectileDamage + 300;
+        scoreElem.textContent = score;
+      }
+    });
+  });
+}
+
 
 // ================== COLLISION HANDLER (SHIP) ==================
 // Called when the ship touches an asteroid.
@@ -323,18 +418,36 @@ function handleCollision() {
     "brightness(0) saturate(100%) invert(38%) sepia(90%) saturate(5342%) hue-rotate(343deg)";
   setTimeout(() => (img.style.filter = "none"), 300);
 
+  // Screen shake
+  document.body.style.animation = "shake 0.15s";
+  setTimeout(() => document.body.style.animation = "", 150);
+
   if (lives === 0) {
     // Out of lives → game over
-    cancelAnimationFrame(loopId);
-    gameRunning = false;
-    isInvincible = false;
-    shipDestroyed();
+    deathAnimation();
   } else {
     // Small delay of invulnerability (1.2s) to recover
     setTimeout(() => (isInvincible = false), 1200);
   }
 }
 
+function deathAnimation() {
+  ship.classList.add("ship-death-zoom");
+
+  document.getElementById("death-fade").style.opacity = 1;
+
+  setTimeout(() => {
+    cancelAnimationFrame(loopId);
+    gameRunning = false;
+    isInvincible = false;
+    shipDestroyed();
+    document.getElementById("death-fade").style.opacity = 0;
+    ship.classList.remove("ship-death-zoom");
+    if (musicEnabled) {
+      crossFadeAudio(gameTrack, menuTrack, 1500);
+    }
+  }, 1200)
+}
 
 // ================== GAME LOOP ==================
 // The main loop runs ~60 times per second using requestAnimationFrame.
@@ -353,11 +466,14 @@ function gameLoop(timestamp) {
   updateShip(deltaSec);
   updateProjectiles(deltaSec);
   checkProjectileCollisions();
+  checkProjectileCollisionsWithUfos();
   updateAsteroids(deltaSec);
   respawnAsteroids(2);
+  updateUfos(deltaSec);
+  respawnUfos(2);
 
   // --- Ship collisions ---
-  if (collisionWithAsteroids()) handleCollision();
+  if (collisionWithAsteroids() || collisionWithUfos()) handleCollision();
 
   // Request the next frame → creates a continuous animation loop
   loopId = requestAnimationFrame(gameLoop);
@@ -376,6 +492,9 @@ function shipDestroyed() {
   // Remove all asteroids
   activateAsteroids(false);
   clearAsteroids();
+
+  activateUfos(false);
+  clearUfos();
 
   // Hide flame
   ship.style.display = "none";
@@ -403,6 +522,8 @@ function resetGame() {
   cancelAnimationFrame(loopId);
   activateAsteroids(true);
   clearAsteroids();
+  activateUfos(true);
+  clearUfos();
   lastTime = 0;
   gameRunning = false;
   isInvincible = false;
@@ -430,6 +551,10 @@ function resetGame() {
 
   // Show main menu again
   menuScreen.style.display = "block";
+
+  // if (musicEnabled) {
+  //   crossFadeAudio(gameTrack, menuTrack, 1500);
+  // }
 }
 
 
@@ -454,6 +579,9 @@ function startGame() {
   activateAsteroids(true);
   clearAsteroids();
   spawnAsteroids(); // Create a random asteroid field
+  activateUfos(true);
+  clearUfos();
+  spawnUfos();
   projectiles = [];
   lastTime = 0;
 
@@ -461,6 +589,16 @@ function startGame() {
   if (!gameRunning) {
     gameRunning = true;
     loopId = requestAnimationFrame(gameLoop);
+  }
+
+  // menuTrack.pause();
+  // gameTrack.currentTime = 0;
+  // if (musicEnabled) {
+  //   gameTrack.play();
+  // }
+
+  if (musicEnabled) {
+    crossFadeAudio(menuTrack, gameTrack, 1200);
   }
 }
 
@@ -470,6 +608,8 @@ function backToMenu() {
   cancelAnimationFrame(loopId);
   activateAsteroids(false);
   clearAsteroids();
+  activateUfos(false);
+  clearUfos();
   lastTime = 0;
   gameRunning = false;
   isInvincible = false;
@@ -554,6 +694,10 @@ function goToMenu() {
 
     // Reset game state
     resetGameState();
+    
+    // if (musicEnabled) {
+    //   crossFadeAudio(gameTrack, menuTrack, 1200);
+    // }
 }
 
 // Reset state helper (does not start the game)
@@ -561,6 +705,8 @@ function resetGameState() {
     cancelAnimationFrame(loopId);
     activateAsteroids(false);
     clearAsteroids();
+    activateUfos(false);
+    clearUfos();
     lastTime = 0;
     gameRunning = false;
     isInvincible = false;
@@ -593,4 +739,28 @@ function updateHighScoresDisplay() {
     for (let i = 0; i < 3; i++) {
         document.getElementById(`hs${i+1}`).textContent = highScores[i] ? `${highScores[i].name}: ${highScores[i].score}` : "Name: ---";
     }
+}
+
+function crossFadeAudio(oldAudio, newAudio, duration = 1000) {
+  if (oldAudio === newAudio) return;
+
+  const steps =  30;
+  const interval = duration / steps;
+  const volumeStep = MASTER_VOLUME / steps;
+
+  newAudio.volume = 0;
+  newAudio.play();
+
+  const fade = setInterval(() => {
+    if (oldAudio.volume > 0) {
+      oldAudio.volume = Math.max(0, oldAudio.volume - volumeStep);
+    }
+    if (newAudio.volume < MASTER_VOLUME) {
+      newAudio.volume = Math.min(MASTER_VOLUME, newAudio.volume + volumeStep);
+    }
+    if (oldAudio.volume === 0 && newAudio.volume === MASTER_VOLUME) {
+      oldAudio.pause();
+      clearInterval(fade);
+    }
+  }, interval);
 }
