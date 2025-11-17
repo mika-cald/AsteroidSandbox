@@ -65,6 +65,8 @@ musicToggle.addEventListener("click", () => {
   }
 })
 
+// test 
+
 // ================== GAME STATE VARIABLES ==================
 // These variables store all data that describes the current "world state" of the game.
 // They are updated continuously as the player moves, shoots, or collides.
