@@ -209,6 +209,12 @@ h3 {
   object-fit: cover;
 }
 
+@keyframes spin {
+  from { transform: rotate(0deg); }
+  to   { transform: rotate(360deg); }
+}
+
+
 .asteroid-hitbox {
   position: absolute;
   top: 50%;

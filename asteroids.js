@@ -36,6 +36,11 @@ function spawnAsteroids(numAsteroids = Math.floor(Math.random() * 6) + 8) {
     asteroidImg.className = "asteroid-img";
     asteroidWrapper.appendChild(asteroidImg);
 
+    // --- spin ---
+    const spinDuration = 10 + Math.random() * 20; // 10–30s per rotation
+    const direction = Math.random() < 0.5 ? "normal" : "reverse";
+    asteroidImg.style.animation = `spin ${spinDuration}s linear infinite ${direction}`;
+
     // --- hitbox (scaled with asteroid) ---
     const hitbox = document.createElement("div");
     hitbox.className = "asteroid-hitbox";
