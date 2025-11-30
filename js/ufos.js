@@ -18,12 +18,28 @@ function spawnUfos() {
     ufoWrapper.dataset.size = size;
 
     const edge = Math.floor(Math.random() * 4);
+
     let x, y;
     switch (edge) {
-      case 0: x = Math.random() * window.innerWidth;      y = -size;                  break;
-      case 1: x = window.innerWidth + size;               y = Math.random() * window.innerHeight; break;
-      case 2: x = Math.random() * window.innerWidth;      y = window.innerHeight + size; break;
-      case 3: x = -size;                                  y = Math.random() * window.innerHeight; break;
+      case 0: 
+        x = Math.random() * window.innerWidth;      
+        y = -size;                  
+        break;
+
+      case 1: 
+        x = window.innerWidth + size;               
+        y = Math.random() * window.innerHeight; 
+        break;
+
+      case 2: 
+        x = Math.random() * window.innerWidth;      
+        y = window.innerHeight + size; 
+        break;
+
+      case 3: 
+        x = -size;                                  
+        y = Math.random() * window.innerHeight; 
+        break;
     }
 
     ufoWrapper.style.left = x + "px";
