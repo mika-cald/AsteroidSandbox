@@ -16,11 +16,27 @@ function spawnAsteroids(numAsteroids = Math.floor(Math.random() * 6) + 8) {
 
     const edge = Math.floor(Math.random() * 4);
     let x, y;
+    
     switch (edge) {
-      case 0: x = Math.random() * window.innerWidth;      y = -size;                  break;
-      case 1: x = window.innerWidth + size;               y = Math.random() * window.innerHeight; break;
-      case 2: x = Math.random() * window.innerWidth;      y = window.innerHeight + size; break;
-      case 3: x = -size;                                  y = Math.random() * window.innerHeight; break;
+      case 0:
+        x = Math.random() * window.innerWidth;
+        y = -size;
+        break;
+
+      case 1:
+        x = window.innerWidth + size;
+        y = Math.random() * window.innerHeight;
+        break;
+
+      case 2:
+        x = Math.random() * window.innerWidth;
+        y = window.innerHeight + size;
+        break;
+
+      case 3:
+        x = -size;
+        y = Math.random() * window.innerHeight;
+        break;
     }
 
     asteroidWrapper.style.left = x + "px";
