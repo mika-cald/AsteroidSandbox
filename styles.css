@@ -128,36 +128,6 @@ h3 {
     left: -37.5px;
 }
 
-#propellant {
-    position: absolute;
-    top: calc(100% + 9px);
-    left: 50%;
-    transform: translate(50%, 0);
-    width: 20px;
-    height: 30px;
-    background: radial-gradient(ellipse at center, #ff66ff 0%, #c800ff 35%, #5f00ff 70%, transparent 100%);
-    border-radius: 50%;
-    opacity: 0;
-    filter: blur(3px) saturate(110%);
-    transition: opacity 0.08s linear, height 0.08s linear, transform 0.08s linear;
-    transform-origin: top center;
-    will-change: opacity, height, transform;
-    pointer-events: none; 
-}
-
-/* Flicker Animation */
-#propellant.thrusting {
-    animation: simpleFlare 0.12s linear infinite;
-    opacity: 1;
-}
-
-@keyframes simpleFlare {
-    0% { transform: translate(-50%, 0) scaleY(0.95) translateX(0px); }
-    40% { transform: translate(-50%, 0) scaleY(1.15) translateX(3px); }
-    70% { transform: translate(-50%, 0) scaleY(0.9) translateX(-2px); }
-    100% { transform: translate(-50%, 0) scaleY(1) translateX(0px); }
-}
-
 /* Score */
 #score-display {
   position: absolute;

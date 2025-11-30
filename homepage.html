@@ -1,91 +1,103 @@
 <!DOCTYPE html>
 <html>
-	<head>
-		<meta charset="UTF-8" />
-		<meta name="viewport" content="width=device-width, initial-scale=1" />
-		<title>Asteroids</title>
-		<link href="bootstrap/css/bootstrap.min.css" rel="stylesheet">
-        <link href="styles.css" rel="stylesheet">
-		<script src="bootstrap/js/bootstrap.bundle.min.js"></script>
-	</head>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Asteroids</title>
 
-	<body id="game-screen">
-		<button class="music-btn" id="musicToggle">
-			<!-- Sound on -->
-			<svg id="icon-sound-on" xmlns="http://www.w3.org/2000/svg" width="40" height="35" fill="currentColor" viewBox="0 0 16 16">
-				<path d="M11.536 14.01A8.47 8.47 0 0 0 14.026 8a8.47 8.47 0 0 0-2.49-6.01l-.708.707A7.48 7.48 0 0 1 13.025 8c0 2.071-.84 3.946-2.197 5.303z"/>
-				<path d="M10.121 12.596A6.48 6.48 0 0 0 12.025 8a6.48 6.48 0 0 0-1.904-4.596l-.707.707A5.48 5.48 0 0 1 11.025 8a5.48 5.48 0 0 1-1.61 3.89z"/>
-				<path d="M10.025 8a4.5 4.5 0 0 1-1.318 3.182L8 10.475A3.5 3.5 0 0 0 9.025 8c0-.966-.392-1.841-1.025-2.475l.707-.707A4.5 4.5 0 0 1 10.025 8M7 4a.5.5 0 0 0-.812-.39L3.825 5.5H1.5A.5.5 0 0 0 1 6v4a.5.5 0 0 0 .5.5h2.325l2.363 1.89A.5.5 0 0 0 7 12zM4.312 6.39 6 5.04v5.92L4.312 9.61A.5.5 0 0 0 4 9.5H2v-3h2a.5.5 0 0 0 .312-.11"/>
-        	</svg>
+    <link href="bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link href="styles.css" rel="stylesheet">
+    <script src="bootstrap/js/bootstrap.bundle.min.js"></script>
+  </head>
 
-			<!-- Sound off -->
-			<svg id="icon-sound-off" xmlns="http://www.w3.org/2000/svg" width="40" height="35" fill="currentColor" viewBox="0 0 16 16">
-  				<path d="M6.717 3.55A.5.5 0 0 1 7 4v8a.5.5 0 0 1-.812.39L3.825 10.5H1.5A.5.5 0 0 1 1 10V6a.5.5 0 0 1 .5-.5h2.325l2.363-1.89a.5.5 0 0 1 .529-.06M6 5.04 4.312 6.39A.5.5 0 0 1 4 6.5H2v3h2a.5.5 0 0 1 .312.11L6 10.96zm7.854.606a.5.5 0 0 1 0 .708L12.207 8l1.647 1.646a.5.5 0 0 1-.708.708L11.5 8.707l-1.646 1.647a.5.5 0 0 1-.708-.708L10.793 8 9.146 6.354a.5.5 0 1 1 .708-.708L11.5 7.293l1.646-1.647a.5.5 0 0 1 .708 0"/>
-			</svg>
-		</button>
+  <body id="game-screen">
 
-		<div id="music" style="display:none">
-			<audio id="menuTrack" loop>
-				<source src="music/track 1.ogg" type="audio/ogg">
-			</audio>
+    <!-- Music Toggle Button -->
+    <button class="music-btn" id="musicToggle">
+      <!-- Sound on -->
+      <svg id="icon-sound-on" xmlns="http://www.w3.org/2000/svg" width="40" height="35" fill="currentColor" viewBox="0 0 16 16">
+        <path d="M11.536 14.01A8.47 8.47 0 0 0 14.026 8a8.47 8.47 0 0 0-2.49-6.01l-.708.707A7.48 7.48 0 0 1 13.025 8c0 2.071-.84 3.946-2.197 5.303z"/>
+        <path d="M10.121 12.596A6.48 6.48 0 0 0 12.025 8a6.48 6.48 0 0 0-1.904-4.596l-.707.707A5.48 5.48 0 0 1 11.025 8a5.48 5.48 0 0 1-1.61 3.89z"/>
+        <path d="M10.025 8a4.5 4.5 0 0 1-1.318 3.182L8 10.475A3.5 3.5 0 0 0 9.025 8c0-.966-.392-1.841-1.025-2.475l.707-.707A4.5 4.5 0 0 1 10.025 8M7 4a.5.5 0 0 0-.812-.39L3.825 5.5H1.5A.5.5 0 0 0 1 6v4a.5.5 0 0 0 .5.5h2.325l2.363 1.89A.5.5 0 0 0 7 12zM4.312 6.39 6 5.04v5.92L4.312 9.61A.5.5 0 0 0 4 9.5H2v-3h2a.5.5 0 0 0 .312-.11"/>
+      </svg>
 
-			<audio id="gameTrack" loop>
-				<source src="music/track 2.ogg" type="audio/ogg">
-			</audio>
-		</div>
+      <!-- Sound off -->
+      <svg id="icon-sound-off" xmlns="http://www.w3.org/2000/svg" width="40" height="35" fill="currentColor" viewBox="0 0 16 16">
+        <path d="M6.717 3.55A.5.5 0 0 1 7 4v8a.5.5 0 0 1-.812.39L3.825 10.5H1.5A.5.5 0 0 1 1 10V6a.5.5 0 0 1 .5-.5h2.325l2.363-1.89a.5.5 0 0 1 .529-.06M6 5.04 4.312 6.39A.5.5 0 0 1 4 6.5H2v3h2a.5.5 0 0 1 .312.11L6 10.96zm7.854.606a.5.5 0 0 1 0 .708L12.207 8l1.647 1.646a.5.5 0 0 1-.708.708L11.5 8.707l-1.646 1.647a.5.5 0 0 1-.708-.708L10.793 8 9.146 6.354a.5.5 0 1 1 .708-.708L11.5 7.293l1.646-1.647a.5.5 0 0 1 .708 0"/>
+      </svg>
+    </button>
 
-        <div id="stars-container"></div>
+    <!-- Hidden Audio Source Elements -->
+    <div id="music" style="display:none">
+      <audio id="menuTrack" loop>
+        <source src="music/track 1.ogg" type="audio/ogg">
+      </audio>
 
-		<div id = "menu-screen">
-        	<h1>Asteroids</h1>
-        	<div class="menu">
-            	<button class="btn btn-transparent btn-lg play-btn">Play</button>
-            	<button class="btn btn-transparent btn-lg high-scores-btn">High Scores</button>
-        	</div>
-		</div>
+      <audio id="gameTrack" loop>
+        <source src="music/track 2.ogg" type="audio/ogg">
+      </audio>
+    </div>
 
-		<div id="high-scores-screen" class="high-scores" style="display: none">
-			<h2>High Scores</h2>
-			<ol id="score-list">
-				<li><span id="hs1">Name: ---</span> points</li>
-				<li><span id="hs2">Name: ---</span> points</li>
-				<li><span id="hs3">Name: ---</span> points</li>
-			</ol>
-		</div>
-		
-		<div id="ship">
-			<div id="death-fade"></div>
-			<img src="asset-files/player_ship/Main Ship/Main Ship - Bases/Main Ship - Base - Full health.png">
-			<div id="engine">
-				<img src="asset-files/player_ship/Main Ship/Main Ship - Engine Effects/Base Engine - Idle.gif">
-			</div>
-			<!-- <div id="propellant"></div>   -->
-		</div>
+    <!-- Background Stars -->
+    <div id="stars-container"></div>
 
-		<div id="restart-game" style="display: none">
-			<h3>Your ship has been destroyed!</h3>
-			<div class="restart">
-				<button class="btn btn-transparent btn-lg restart-btn">Restart</button>
-			</div>
-		</div>
+    <!-- Menu Screen -->
+    <div id="menu-screen">
+      <h1>Asteroids</h1>
+      <div class="menu">
+        <button class="btn btn-transparent btn-lg play-btn">Play</button>
+        <button class="btn btn-transparent btn-lg high-scores-btn">High Scores</button>
+      </div>
+    </div>
 
-		<div id="end-screen" style="display: none;">
-			<h2>Game Over!</h2>
-			<p>Your final score: <span id="final-score">0</span></p>
-			<div class="nickname-input">
-				<label for="nickname">Enter your nickname:</label>
-				<input type="text" id="nickname" maxlength="12" placeholder="Your name">
-			</div>
-    		<button class="btn btn-transparent btn-lg" id="submit-score-btn">Submit Score</button>
-    		<button class="btn btn-transparent btn-lg" id="back-to-menu-btn">Back to Menu</button>
-		</div>
+    <!-- High Scores Screen -->
+    <div id="high-scores-screen" class="high-scores" style="display: none">
+      <h2>High Scores</h2>
+      <ol id="score-list">
+        <li><span id="hs1">Name: ---</span> points</li>
+        <li><span id="hs2">Name: ---</span> points</li>
+        <li><span id="hs3">Name: ---</span> points</li>
+      </ol>
+    </div>
 
-		<script src="stars.js" defer></script>
-		<script src="main.js" defer></script>
-		<script src="asteroids.js" defer></script>
-		<script src="ufos.js" defer></script>
-		<div id="score-display">
-			Score: <span id="score">0</span>
-		</div>
-	</body>
+    <!-- Player Ship -->
+    <div id="ship">
+      <div id="death-fade"></div>
+      <img src="asset-files/player_ship/Main Ship/Main Ship - Bases/Main Ship - Base - Full health.png">
+      <div id="engine">
+        <img src="asset-files/player_ship/Main Ship/Main Ship - Engine Effects/Base Engine - Idle.gif">
+      </div>
+    </div>
+
+    <!-- Restart Overlay -->
+    <div id="restart-game" style="display: none">
+      <h3>Your ship has been destroyed!</h3>
+      <div class="restart">
+        <button class="btn btn-transparent btn-lg restart-btn">Restart</button>
+      </div>
+    </div>
+
+    <!-- End Screen -->
+    <div id="end-screen" style="display: none;">
+      <h2>Game Over!</h2>
+      <p>Your final score: <span id="final-score">0</span></p>
+
+      <div class="nickname-input">
+        <label for="nickname">Enter your nickname:</label>
+        <input type="text" id="nickname" maxlength="12" placeholder="Your name">
+      </div>
+
+      <button class="btn btn-transparent btn-lg" id="submit-score-btn">Submit Score</button>
+      <button class="btn btn-transparent btn-lg" id="back-to-menu-btn">Back to Menu</button>
+    </div>
+
+    <!-- Score Display -->
+    <div id="score-display">
+      Score: <span id="score">0</span>
+    </div>
+
+    <!-- Module Entrypoint -->
+    <script type="module" src="js/main.js"></script>
+
+  </body>
 </html>
