@@ -14,6 +14,7 @@ import { crossFadeAudio, musicEnabled, menuTrack, gameTrack } from "./audio.js";
 
 const MAX_DELTA = 0.05;
 
+// Main game loop
 function gameLoop(timestamp) {
   if (state.lastTime === 0) state.lastTime = timestamp;
   let deltaSec = (timestamp - state.lastTime) / 1000;
@@ -35,6 +36,7 @@ function gameLoop(timestamp) {
   state.loopId = requestAnimationFrame(gameLoop);
 }
 
+// Handle ship collision with asteroid or UFO
 function handleCollision() {
   if (state.isInvincible) return;
   state.isInvincible = true;
@@ -57,6 +59,7 @@ function handleCollision() {
   }
 }
 
+// Ship death animation and game over handling
 function deathAnimation() {
   ship.classList.add("ship-death-zoom");
   document.getElementById("death-fade").style.opacity = 1;
@@ -75,6 +78,7 @@ function deathAnimation() {
   }, 1200);
 }
 
+// Handle ship destruction and transition to end screen
 function shipDestroyed() {
   cancelAnimationFrame(state.loopId);
   state.gameRunning = false;
@@ -97,6 +101,7 @@ function shipDestroyed() {
   nicknameInput.value = "";
 }
 
+// Reset the game to initial state
 function resetGame() {
   cancelAnimationFrame(state.loopId);
   activateAsteroids(true);
@@ -128,6 +133,7 @@ function resetGame() {
   menuScreen.style.display = "block";
 }
 
+// Start a new game
 function startGame() {
   menuScreen.style.display = "none";
   highScoresScreen.style.display = "none";
@@ -164,6 +170,7 @@ function startGame() {
   }
 }
 
+// Return to main menu from game or high scores
 function backToMenu() {
   cancelAnimationFrame(state.loopId);
   activateAsteroids(false);
@@ -217,6 +224,7 @@ function resetGameState() {
   state.projectiles = [];
 }
 
+// Go to main menu from end screen
 function goToMenu() {
   endScreen.style.display = "none";
   menuScreen.style.display = "block";
