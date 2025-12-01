@@ -39,9 +39,12 @@ document.body.appendChild(livesDisplay);
 
 // Update lives display based on current lives
 export function updateLives() {
+  // Update lives text
   livesDisplay.textContent = `Lives: ${state.lives}`;
 
   const img = ship.querySelector("img");
+
+  // Update ship image based on lives
   switch (true) {
     case state.lives === 3:
       img.src = "assets/player/base/full-health.png";

@@ -6,10 +6,12 @@
 import { state } from "./gameState.js";
 import { scoreElem } from "./ui.js";
 
+// Projectile properties
 const projectileSpeed = 800;
 const projectileLifetime = 1500;
 const projectileDamage = 100;
 
+// Fire a new projectile from the ship's position
 function fireProjectile() {
   if (!state.gameRunning) return;
 
@@ -21,21 +23,25 @@ function fireProjectile() {
   projectileImg.className = "asteroid-img";
   projectile.appendChild(projectileImg);
 
+  // Calculate starting position and velocity based on ship's angle
   const rad = state.angle * Math.PI / 180;
   const offset = 30;
   const startX = state.shipX + Math.sin(rad) * offset;
   const startY = state.shipY - Math.cos(rad) * offset;
 
+  // Set initial position and rotation
   projectile.style.left = `${startX}px`;
   projectile.style.top  = `${startY}px`;
   projectile.style.transform = `translate(-50%, -50%) rotate(${state.angle}deg)`;
 
+  // Set velocity
   projectile.dataset.velX = Math.sin(rad) * projectileSpeed;
   projectile.dataset.velY = -Math.cos(rad) * projectileSpeed;
 
   document.body.appendChild(projectile);
   state.projectiles.push(projectile);
 
+  // Remove projectile after its lifetime expires
   setTimeout(() => {
     if (projectile.parentNode) {
       projectile.remove();
@@ -44,6 +50,7 @@ function fireProjectile() {
   }, projectileLifetime);
 }
 
+// Update positions of all projectiles
 function updateProjectiles(deltaSec) {
   state.projectiles.forEach(p => {
     let x = parseFloat(p.style.left);
@@ -62,6 +69,7 @@ function updateProjectiles(deltaSec) {
   });
 }
 
+// Check for collisions between projectiles and asteroids
 function checkProjectileCollisions() {
   const asteroids = document.querySelectorAll(".asteroid-hitbox");
   [...state.projectiles].forEach(p => {
@@ -101,6 +109,7 @@ function checkProjectileCollisions() {
   });
 }
 
+// Check for collisions between projectiles and UFOs
 function checkProjectileCollisionsWithUfos() {
   const ufos = document.querySelectorAll(".ufo-hitbox");
   [...state.projectiles].forEach(p => {

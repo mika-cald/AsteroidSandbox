@@ -4,6 +4,7 @@
 
 import { ship } from "./ui.js";
 
+// Check if two rectangles overlap
 function rectsOverlap(r1, r2) {
   return !(
     r2.left > r1.right ||
@@ -13,10 +14,12 @@ function rectsOverlap(r1, r2) {
   );
 }
 
+// Check for collision between ship and any asteroids
 function collisionWithAsteroids() {
   const shipRect = ship.getBoundingClientRect();
   const hitboxes = document.querySelectorAll(".asteroid-hitbox");
 
+  // Check each asteroid hitbox for overlap with ship
   for (const box of hitboxes) {
     const rect = box.getBoundingClientRect();
     if (rectsOverlap(shipRect, rect)) return true;
@@ -24,6 +27,7 @@ function collisionWithAsteroids() {
   return false;
 }
 
+// Check for collision between ship and any UFOs
 function collisionWithUfos() {
   const shipRect = ship.getBoundingClientRect();
   const hitboxes = document.querySelectorAll(".ufo-hitbox");

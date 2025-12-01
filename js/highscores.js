@@ -2,6 +2,7 @@
 // Manages saving and displaying high scores using localStorage.
 // ======================================================================
 
+// Save a new high score
 function saveHighScore(name, score) {
   const highScores = JSON.parse(localStorage.getItem("highScores") || "[]");
   highScores.push({ name, score });
@@ -11,6 +12,7 @@ function saveHighScore(name, score) {
   updateHighScoresDisplay();
 }
 
+// Update the high scores display in the UI
 function updateHighScoresDisplay() {
   const highScores = JSON.parse(localStorage.getItem("highScores") || "[]");
   for (let i = 0; i < 3; i++) {

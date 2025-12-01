@@ -8,6 +8,7 @@ import { playBtn, rstBtn, highScoresBtn, submitScoreBtn, backToMenuBtn, menuScre
 import { startGame, resetGame, backToMenu, goToMenu } from "./game.js";
 import { saveHighScore, updateHighScoresDisplay} from "./highscores.js";
 
+// Initialize input event handlers
 function initInputHandlers() {
   // Keyboard
   document.addEventListener("keydown", e => {
