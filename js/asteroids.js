@@ -72,6 +72,7 @@ function spawnAsteroids(numAsteroids = Math.floor(Math.random() * 6) + 8) {
     const angle = Math.random() * Math.PI * 2;
     const speed = 50 + Math.random() * 125;
 
+    // Store velocity and size in dataset for later use
     asteroidWrapper.dataset.velX = Math.cos(angle) * speed;
     asteroidWrapper.dataset.velY = Math.sin(angle) * speed;
     asteroidWrapper.dataset.size = size;
