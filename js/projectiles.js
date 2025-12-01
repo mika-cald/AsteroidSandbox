@@ -2,9 +2,9 @@
 import { state } from "./gameState.js";
 import { scoreElem } from "./ui.js";
 
-const projectileSpeed    = 800;
+const projectileSpeed = 800;
 const projectileLifetime = 1500;
-const projectileDamage   = 100;
+const projectileDamage = 100;
 
 function fireProjectile() {
   if (!state.gameRunning) return;
@@ -49,7 +49,7 @@ function updateProjectiles(deltaSec) {
     y += parseFloat(p.dataset.velY) * deltaSec;
 
     p.style.left = `${x}px`;
-    p.style.top  = `${y}px`;
+    p.style.top = `${y}px`;
 
     if (x < -10 || x > window.innerWidth + 10 || y < -10 || y > window.innerHeight + 10) {
       p.remove();
@@ -67,9 +67,9 @@ function checkProjectileCollisions() {
       const aRect = a.getBoundingClientRect();
 
       const hit =
-        pRect.left   < aRect.right &&
-        pRect.right  > aRect.left &&
-        pRect.top    < aRect.bottom &&
+        pRect.left < aRect.right &&
+        pRect.right > aRect.left &&
+        pRect.top < aRect.bottom &&
         pRect.bottom > aRect.top;
 
       if (hit) {
@@ -106,9 +106,9 @@ function checkProjectileCollisionsWithUfos() {
       const aRect = u.getBoundingClientRect();
 
       const hit =
-        pRect.left   < aRect.right &&
-        pRect.right  > aRect.left &&
-        pRect.top    < aRect.bottom &&
+        pRect.left < aRect.right &&
+        pRect.right > aRect.left &&
+        pRect.top < aRect.bottom &&
         pRect.bottom > aRect.top;
 
       if (hit) {

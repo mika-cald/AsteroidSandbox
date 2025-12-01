@@ -19,7 +19,7 @@ function initAudio() {
     musicEnabled = !musicEnabled;
 
     if (musicEnabled) {
-      iconOn.style.display  = "block";
+      iconOn.style.display = "block";
       iconOff.style.display = "none";
 
       if (state.gameRunning) {
@@ -28,7 +28,7 @@ function initAudio() {
         menuTrack.play();
       }
     } else {
-      iconOn.style.display  = "none";
+      iconOn.style.display = "none";
       iconOff.style.display = "block";
       menuTrack.pause();
       gameTrack.pause();

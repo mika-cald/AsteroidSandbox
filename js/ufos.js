@@ -43,13 +43,13 @@ function spawnUfos() {
     }
 
     ufoWrapper.style.left = x + "px";
-    ufoWrapper.style.top  = y + "px";
+    ufoWrapper.style.top = y + "px";
 
     const ufoImg = document.createElement("img");
     ufoImg.src = "assets/enemies/ships/bomber/base.png";
     ufoImg.className = "ufo-img";
-    ufoImg.style.width     = size + "px";
-    ufoImg.style.height    = size + "px";
+    ufoImg.style.width = size + "px";
+    ufoImg.style.height = size + "px";
     ufoImg.style.objectFit = "contain";
     ufoWrapper.appendChild(ufoImg);
 

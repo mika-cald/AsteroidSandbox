@@ -24,13 +24,13 @@ function initInputHandlers() {
 
   highScoresBtn.addEventListener("click", () => {
     updateHighScoresDisplay();
-    menuScreen.style.display       = "none";
+    menuScreen.style.display = "none";
     highScoresScreen.style.display = "block";
   });
 
   submitScoreBtn.addEventListener("click", () => {
     const nickname = nicknameInput.value.trim() || "Player";
-    const score    = parseInt(finalScoreElem.textContent, 10) || 0;
+    const score = parseInt(finalScoreElem.textContent, 10) || 0;
     saveHighScore(nickname, score);
     goToMenu();
   });

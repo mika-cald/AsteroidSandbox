@@ -2,12 +2,14 @@
 import { state } from "./gameState.js";
 import { ship, engine } from "./ui.js";
 
-const thrust         = 600;
-const rotationSpeed  = 180;
-const friction       = 0.98;
+// Ship physics constants
+const thrust = 600; 
+const rotationSpeed = 180;
+const friction = 0.98;
 
 let spriteChange = 0;
 
+// Update ship position and state
 function updateShip(deltaSec = 0) {
   const engineImg = engine.querySelector("img");
 

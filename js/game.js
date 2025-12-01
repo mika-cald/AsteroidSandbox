@@ -59,7 +59,7 @@ function deathAnimation() {
 
   setTimeout(() => {
     cancelAnimationFrame(state.loopId);
-    state.gameRunning  = false;
+    state.gameRunning = false;
     state.isInvincible = false;
     shipDestroyed();
     document.getElementById("death-fade").style.opacity = 0;
@@ -73,7 +73,7 @@ function deathAnimation() {
 
 function shipDestroyed() {
   cancelAnimationFrame(state.loopId);
-  state.gameRunning  = false;
+  state.gameRunning = false;
   state.isInvincible = false;
 
   Object.keys(state.keys).forEach(k => (state.keys[k] = false));
@@ -83,10 +83,10 @@ function shipDestroyed() {
   activateUfos(false);
   clearUfos();
 
-  ship.style.display   = "none";
+  ship.style.display = "none";
   engine.style.display = "none";
 
-  endScreen.style.display   = "block";
+  endScreen.style.display = "block";
   scoreDisplay.style.display = "none";
   livesDisplay.style.display = "none";
   finalScoreElem.textContent = scoreElem.textContent;
@@ -99,10 +99,10 @@ function resetGame() {
   clearAsteroids();
   activateUfos(true);
   clearUfos();
-  state.lastTime     = 0;
-  state.gameRunning  = false;
+  state.lastTime = 0;
+  state.gameRunning = false;
   state.isInvincible = false;
-  state.lives        = 3;
+  state.lives = 3;
   updateLives();
   scoreElem.textContent = "0";
 
@@ -114,27 +114,27 @@ function resetGame() {
   state.projectiles.forEach(p => p.remove());
   state.projectiles = [];
 
-  ship.style.display   = "none";
+  ship.style.display = "none";
   engine.style.display = "none";
 
   scoreDisplay.style.display = "none";
   livesDisplay.style.display = "none";
-  gameRestart.style.display  = "none";
+  gameRestart.style.display = "none";
 
   menuScreen.style.display = "block";
 }
 
 function startGame() {
-  menuScreen.style.display      = "none";
+  menuScreen.style.display = "none";
   highScoresScreen.style.display = "none";
-  gameRestart.style.display      = "none";
+  gameRestart.style.display = "none";
 
-  ship.style.display   = "block";
+  ship.style.display = "block";
   engine.style.display = "block";
   scoreDisplay.style.display = "block";
   livesDisplay.style.display = "block";
 
-  state.lives        = 3;
+  state.lives = 3;
   state.isInvincible = false;
   updateLives();
   scoreElem.textContent = "0";
@@ -148,7 +148,7 @@ function startGame() {
   spawnUfos();
 
   state.projectiles = [];
-  state.lastTime    = 0;
+  state.lastTime = 0;
 
   if (!state.gameRunning) {
     state.gameRunning = true;
@@ -166,10 +166,10 @@ function backToMenu() {
   clearAsteroids();
   activateUfos(false);
   clearUfos();
-  state.lastTime     = 0;
+  state.lastTime = 0;
   state.gameRunning  = false;
   state.isInvincible = false;
-  state.lives        = 3;
+  state.lives = 3;
   updateLives();
 
   state.shipX = window.innerWidth / 2;
@@ -180,14 +180,14 @@ function backToMenu() {
   state.projectiles.forEach(p => p.remove());
   state.projectiles = [];
 
-  ship.style.display   = "none";
+  ship.style.display = "none";
   engine.style.display = "none";
   scoreDisplay.style.display = "none";
   livesDisplay.style.display = "none";
 
-  menuScreen.style.display      = "block";
+  menuScreen.style.display = "block";
   highScoresScreen.style.display = "none";
-  endScreen.style.display        = "none";
+  endScreen.style.display = "none";
 }
 
 // Used by high score submit / back-to-menu
@@ -197,10 +197,10 @@ function resetGameState() {
   clearAsteroids();
   activateUfos(false);
   clearUfos();
-  state.lastTime     = 0;
+  state.lastTime = 0;
   state.gameRunning  = false;
   state.isInvincible = false;
-  state.lives        = 3;
+  state.lives = 3;
   updateLives();
   scoreElem.textContent = "0";
 
@@ -214,10 +214,10 @@ function resetGameState() {
 }
 
 function goToMenu() {
-  endScreen.style.display   = "none";
-  menuScreen.style.display  = "block";
-  ship.style.display        = "none";
-  engine.style.display      = "none";
+  endScreen.style.display = "none";
+  menuScreen.style.display = "block";
+  ship.style.display = "none";
+  engine.style.display = "none";
   scoreDisplay.style.display = "none";
   livesDisplay.style.display = "none";
 

@@ -55,7 +55,7 @@ function spawnAsteroids(numAsteroids = Math.floor(Math.random() * 6) + 8) {
 
     // Set initial position
     asteroidWrapper.style.left = x + "px";
-    asteroidWrapper.style.top  = y + "px";
+    asteroidWrapper.style.top = y + "px";
 
     // Create and append asteroid image
     const asteroidImg = document.createElement("img");
@@ -97,9 +97,9 @@ function updateAsteroids(deltaSec = 0) {
     y += velY * deltaSec;
 
     // Screen wrapping logic
-    const width  = window.innerWidth;
+    const width = window.innerWidth;
     const height = window.innerHeight;
-    const size   = asteroid.dataset.size;
+    const size = asteroid.dataset.size;
 
     if (x < -size * 0.75) 
       x = width;
@@ -114,7 +114,7 @@ function updateAsteroids(deltaSec = 0) {
       y = -size * 0.75;
 
     asteroid.style.left = x + "px";
-    asteroid.style.top  = y + "px";
+    asteroid.style.top = y + "px";
   });
 }
 
