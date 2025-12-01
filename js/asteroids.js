@@ -76,6 +76,10 @@ function spawnAsteroids(numAsteroids = Math.floor(Math.random() * 6) + 8) {
     asteroidWrapper.dataset.velY = Math.sin(angle) * speed;
     asteroidWrapper.dataset.size = size;
 
+    // Random rotation and speed
+    asteroidWrapper.dataset.rotation = 0;
+    asteroidWrapper.dataset.rotSpeed = (Math.random() * 120 - 30);
+
     document.body.appendChild(asteroidWrapper);
   }
 }
@@ -115,6 +119,16 @@ function updateAsteroids(deltaSec = 0) {
 
     asteroid.style.left = x + "px";
     asteroid.style.top = y + "px";
+
+    // Rotation update 
+    let rotation = parseFloat(asteroid.dataset.rotation);
+    let rotSpeed = parseFloat(asteroid.dataset.rotSpeed);
+    
+    rotation += rotSpeed * deltaSec;
+    asteroid.dataset.rotation = rotation;
+
+    const img = asteroid.querySelector(".asteroid-img");
+    img.style.transform = `rotate(${rotation}deg)`;
   });
 }
 
