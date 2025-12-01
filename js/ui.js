@@ -39,16 +39,16 @@ export function updateLives() {
   const img = ship.querySelector("img");
   switch (true) {
     case state.lives === 3:
-      img.src = "asset-files/player_ship/Main Ship/Main Ship - Bases/Main Ship - Base - Full health.png";
+      img.src = "assets/player/base/full-health.png";
       break;
     case state.lives === 2:
-      img.src = "asset-files/player_ship/Main Ship/Main Ship - Bases/Main Ship - Base - Slight damage.png";
+      img.src = "assets/player/base/slight-damage.png";
       break;
     case state.lives === 1:
-      img.src = "asset-files/player_ship/Main Ship/Main Ship - Bases/Main Ship - Base - Damaged.png";
+      img.src = "assets/player/base/damaged.png";
       break;
     case state.lives === 0:
-      img.src = "asset-files/player_ship/Main Ship/Main Ship - Bases/Main Ship - Base - Very damaged.png";
+      img.src = "assets/player/base/very-damaged.png";
       break;
   }
 }

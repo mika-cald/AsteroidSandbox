@@ -46,7 +46,7 @@ function spawnUfos() {
     ufoWrapper.style.top  = y + "px";
 
     const ufoImg = document.createElement("img");
-    ufoImg.src = "asset-files/enemy_ships/fleet_1/Kla'ed/Base/Kla'ed - Battlecruiser - Base.png";
+    ufoImg.src = "assets/enemies/ships/bomber/base.png";
     ufoImg.className = "ufo-img";
     ufoImg.style.width     = size + "px";
     ufoImg.style.height    = size + "px";

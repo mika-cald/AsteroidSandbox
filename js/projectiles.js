@@ -13,7 +13,7 @@ function fireProjectile() {
   projectile.className = "projectile";
 
   const projectileImg = document.createElement("img");
-  projectileImg.src = "asset-files/player_ship/Main ship weapons/Main ship weapon - Projectile - Rocket.gif";
+  projectileImg.src = "assets/player/projectiles/rocket.gif"; 
   projectileImg.className = "asteroid-img";
   projectile.appendChild(projectileImg);
 
@@ -81,7 +81,7 @@ function checkProjectileCollisions() {
           const asteroidImg = asteroidWrap.querySelector(".asteroid-img");
           if (asteroidImg) {
             const newImg = asteroidImg.cloneNode();
-            newImg.src = `asset-files/enviroment/Asteroids/Asteroid 01 - Explode.gif?${Date.now()}`;
+            newImg.src = `assets/asteroids/explode.gif?${Date.now()}`;
             asteroidImg.replaceWith(newImg);
           }
           const hitbox = asteroidWrap.querySelector(".asteroid-hitbox");
@@ -129,7 +129,7 @@ function checkProjectileCollisionsWithUfos() {
           if (ufoImg) {
             const newImg = ufoImg.cloneNode();
             ufoImg.replaceWith(newImg);
-            newImg.src = `asset-files/enemy_ships/fleet_1/Kla'ed/Destruction/Kla'ed - Battlecruiser - Destruction.gif?${Date.now()}`;
+            newImg.src = `assets/enemies/ships/bomber/destruction.gif?${Date.now()}`;
           }
           const hitbox = ufoWrap.querySelector(".ufo-hitbox");
           if (hitbox) hitbox.remove();

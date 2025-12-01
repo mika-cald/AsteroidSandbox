@@ -59,7 +59,7 @@ function spawnAsteroids(numAsteroids = Math.floor(Math.random() * 6) + 8) {
 
     // Create and append asteroid image
     const asteroidImg = document.createElement("img");
-    asteroidImg.src = "asset-files/enviroment/Asteroids/Asteroid 01 - Base.png";
+    asteroidImg.src = "assets/asteroids/base.png";
     asteroidImg.className = "asteroid-img";
     asteroidWrapper.appendChild(asteroidImg);
 

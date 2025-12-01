@@ -25,12 +25,12 @@ function updateShip(deltaSec = 0) {
       state.velY -= Math.cos(rad) * thrust * deltaSec;
 
       if (spriteChange !== 1) {
-        engineImg.src = "asset-files/player_ship/Main Ship/Main Ship - Engine Effects/Base Engine - Powering.gif";
+        engineImg.src = "assets/player/engines/effects/base-power.gif";
         spriteChange = 1;
       }
     } else {
       if (spriteChange !== 0) {
-        engineImg.src = "asset-files/player_ship/Main Ship/Main Ship - Engine Effects/Base Engine - Idle.gif";
+        engineImg.src = "assets/player/engines/effects/base-idle.gif";
         spriteChange = 0;
       }
     }
