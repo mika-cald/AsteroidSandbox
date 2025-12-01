@@ -1,4 +1,4 @@
-// ========================= PROJECTILES MODULE ==========================
+// ========================= PROJECTILES MODULE ===========================
 // Manages creation, movement, and collision detection of projectiles fired
 // by the player's ship.
 // ========================================================================

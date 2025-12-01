@@ -1,6 +1,6 @@
-// ========================== INPUT MODULE =================================
+// =========================== INPUT MODULE =================================
 // Handles keyboard and button input for controlling the ship and game state.
-// =========================================================================
+// ==========================================================================
 
 import { state } from "./gameState.js";
 import { fireProjectile } from "./projectiles.js";

@@ -1,6 +1,6 @@
-// ================ ASTEROIDS MODULE =================
+// =========================== ASTEROIDS MODULE ============================
 // Manages spawning, movement, updating, and clearing asteroids in the game.
-// ====================================================
+// =========================================================================
 
 // Internal state to track if asteroids are active
 let asteroidsActive = true;

@@ -1,4 +1,4 @@
-// ========================== GAME STATE MODULE =============================
+// =========================== GAME STATE MODULE =============================
 // Centralized game state management for ship position, velocity, game status,
 // player stats, and projectiles.
 // ===========================================================================
