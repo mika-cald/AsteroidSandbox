@@ -1,5 +1,7 @@
-// gameState.js
-// Shared mutable game state for the entire game.
+// ========================== GAME STATE MODULE =============================
+// Centralized game state management for ship position, velocity, game status,
+// player stats, and projectiles.
+// ===========================================================================
 
 const state = {
   // Ship position & physics

@@ -1,4 +1,7 @@
-// collision.js
+// ======================== COLLISION MODULE ==========================
+// Handles collision detection between the ship and asteroids or UFOs.
+// ====================================================================
+
 import { ship } from "./ui.js";
 
 function rectsOverlap(r1, r2) {

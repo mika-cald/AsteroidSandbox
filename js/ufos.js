@@ -1,4 +1,7 @@
-// ufos.js
+// ============================= UFOS MODULE ===============================
+// Manages UFO spawning, movement, and interactions with the player's ship.
+// =========================================================================
+
 import { state } from "./gameState.js";
 
 let ufosActive = true;

@@ -1,3 +1,7 @@
+// ========================= AUDIO MODULE ==========================
+// Manages background music playback and cross-fading between tracks.
+// =================================================================
+
 import { state } from "./gameState.js";
 import { musicToggle, iconOn, iconOff } from "./ui.js";
 

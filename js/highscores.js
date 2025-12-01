@@ -1,3 +1,7 @@
+// ========================= HIGHSCORES MODULE ==========================
+// Manages saving and displaying high scores using localStorage.
+// ======================================================================
+
 function saveHighScore(name, score) {
   const highScores = JSON.parse(localStorage.getItem("highScores") || "[]");
   highScores.push({ name, score });

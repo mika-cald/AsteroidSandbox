@@ -1,4 +1,8 @@
-// projectiles.js
+// ========================= PROJECTILES MODULE ==========================
+// Manages creation, movement, and collision detection of projectiles fired
+// by the player's ship.
+// ========================================================================
+
 import { state } from "./gameState.js";
 import { scoreElem } from "./ui.js";
 

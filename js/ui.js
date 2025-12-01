@@ -1,4 +1,8 @@
-// ui.js
+// ============================= UI MODULE ==============================
+// Manages all UI elements including menus, score display, lives display,
+// and ship representation.
+// ======================================================================
+
 import { state } from "./gameState.js";
 
 // ========= Core UI elements =========

@@ -1,4 +1,7 @@
-// input.js
+// ========================== INPUT MODULE =================================
+// Handles keyboard and button input for controlling the ship and game state.
+// =========================================================================
+
 import { state } from "./gameState.js";
 import { fireProjectile } from "./projectiles.js";
 import { playBtn, rstBtn, highScoresBtn, submitScoreBtn, backToMenuBtn, menuScreen, highScoresScreen, finalScoreElem, nicknameInput } from "./ui.js";

@@ -1,4 +1,6 @@
-// stars.js
+// ============================= STARS MODULE ==============================
+// Creates and animates a starfield background for the game.
+// =========================================================================
 
 const starsContainer = document.getElementById("stars-container");
 

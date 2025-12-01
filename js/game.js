@@ -1,3 +1,7 @@
+// =========================== GAME MODULE =============================
+// Manages the main game loop, state transitions, and collision handling.
+// =====================================================================
+
 import { state } from "./gameState.js";
 import { menuScreen, highScoresScreen, scoreDisplay, livesDisplay, gameRestart, ship, engine, endScreen, finalScoreElem, nicknameInput, scoreElem } from "./ui.js";
 import { updateLives } from "./ui.js";

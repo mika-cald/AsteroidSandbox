@@ -1,4 +1,7 @@
-// ship.js
+// ============================= SHIP MODULE ===============================
+// Manages the player's ship movement, rotation, thrust, and screen wrapping.
+// =========================================================================
+
 import { state } from "./gameState.js";
 import { ship, engine } from "./ui.js";
 
