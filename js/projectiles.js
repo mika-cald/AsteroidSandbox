@@ -1,37 +1,44 @@
 // ========================= PROJECTILES MODULE ===========================
-// Manages creation, movement, and collision detection of projectiles fired
-// by the player's ship.
+// This file handles projectile creation, direction, movement, lifetime,
+// and collision detection with asteroids and UFOs.
 // ========================================================================
 
 import { state } from "./gameState.js";
 import { scoreElem } from "./ui.js";
 
 // Projectile properties
-const projectileSpeed = 800;
-const projectileLifetime = 1500;
-const projectileDamage = 100;
+const projectileSpeed = 800; // pixels per second
+const projectileLifetime = 1500; // milliseconds
+const projectileDamage = 100; // points per hit
 
-// Fire a new projectile from the ship's position
+// Fires a new projectile from the ship's position
 function fireProjectile() {
+  // Exit guard that prevents firing when the game is not running
   if (!state.gameRunning) return;
 
+  // Creates projectile element
   const projectile = document.createElement("div");
   projectile.className = "projectile";
 
+  // Create and append projectile image
   const projectileImg = document.createElement("img");
   projectileImg.src = "assets/player/projectiles/rocket.gif"; 
   projectileImg.className = "asteroid-img";
   projectile.appendChild(projectileImg);
 
-  // Calculate starting position and velocity based on ship's angle
+  // Calculate projectile starting position
   const rad = state.angle * Math.PI / 180;
-  const offset = 30;
-  const startX = state.shipX + Math.sin(rad) * offset;
-  const startY = state.shipY - Math.cos(rad) * offset;
+
+  // Offset to start projectile slightly in front of the ship
+  const offset = 30; // 30 pixels in front of the ship
+
+  // Calculate projectile starting coordinates
+  const startX = state.shipX + Math.sin(rad) * offset; // horizontal direction
+  const startY = state.shipY - Math.cos(rad) * offset; // vertical direction
 
   // Set initial position and rotation
   projectile.style.left = `${startX}px`;
-  projectile.style.top  = `${startY}px`;
+  projectile.style.top = `${startY}px`;
   projectile.style.transform = `translate(-50%, -50%) rotate(${state.angle}deg)`;
 
   // Set velocity
