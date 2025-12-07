@@ -148,7 +148,7 @@ function updateAsteroids(deltaSec = 0) {
 }
 
 // Function to respawn asteroids if below a minimum amount
-function respawnAsteroids(minAmount = 10) {
+function respawnAsteroids(minAmount = 7) {
   if (!asteroidsActive) return;
 
   const present = document.querySelectorAll(".asteroid").length;
