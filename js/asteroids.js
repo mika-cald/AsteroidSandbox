@@ -42,29 +42,30 @@ function spawnAsteroids(numAsteroids = Math.floor(Math.random() * 6) + 8) {
     const edge = Math.floor(Math.random() * 4);
     let x, y;
 
-    // Determine position based on chosen edge
-    // 0: top, 1: right, 2: bottom, 3: left
-    switch (edge) {
-      case 0:
-        x = Math.random() * window.innerWidth;
-        y = -size;
-        break;
+  // Determine position based on chosen edge
+  // 0: top, 1: right, 2: bottom, 3: left
+  // Spawn asteroid fully outside screen so it floats inward naturally
+  switch (edge) {
+    case 0: // top
+      x = Math.random() * window.innerWidth;
+      y = -size * 4; // further above screen
+      break;
 
-      case 1:
-        x = window.innerWidth + size;
-        y = Math.random() * window.innerHeight;
-        break;
+    case 1: // right
+      x = window.innerWidth + size * 4;
+      y = Math.random() * window.innerHeight;
+      break;
 
-      case 2:
-        x = Math.random() * window.innerWidth;
-        y = window.innerHeight + size;
-        break;
+    case 2: // bottom
+      x = Math.random() * window.innerWidth;
+      y = window.innerHeight + size * 4;
+      break;
 
-      case 3:
-        x = -size;
-        y = Math.random() * window.innerHeight;
-        break;
-    }
+    case 3: // left
+      x = -size * 4;
+      y = Math.random() * window.innerHeight;
+      break;
+}
 
     // Set initial position
     asteroidWrapper.style.left = x + "px";
@@ -119,18 +120,17 @@ function updateAsteroids(deltaSec = 0) {
     const height = window.innerHeight;
     const size = asteroid.dataset.size;
 
-    // NOTE: you mentioned changing 0.75 → 0.50. That’s reflected here.
-    if (x < -size * 0.5) 
+    if (x < -size * 0.6) 
       x = width;
 
     if (x > width)        
-      x = -size * 0.5;
+      x = -size * 0.6;
 
-    if (y < -size * 0.5) 
+    if (y < -size * 0.6) 
       y = height;
 
     if (y > height)       
-      y = -size * 0.5;
+      y = -size * 0.6;
 
     asteroid.style.left = x + "px";
     asteroid.style.top = y + "px";
