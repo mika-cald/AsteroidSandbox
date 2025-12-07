@@ -16,6 +16,20 @@ function fireProjectile() {
   // Exit guard that prevents firing when the game is not running
   if (!state.gameRunning) return;
 
+// ==============================
+// FIRE RATE LIMITER (COOLDOWN)
+// ==============================
+  const now = performance.now();
+  const cooldown = 200; // milliseconds between shots
+
+  if (now - state.lastShotTime < cooldown) {
+    return; // still cooling down → no shot
+  }
+
+  state.lastShotTime = now;
+// ==============================
+
+
   // Creates projectile element
   const projectile = document.createElement("div");
   projectile.className = "projectile";

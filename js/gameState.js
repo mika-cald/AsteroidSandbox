@@ -22,7 +22,10 @@ const state = {
   isInvincible: false,
 
   // Projectiles
-  projectiles: []
+  projectiles: [],
+
+  lastShotTime: 0,
+  shotCooldown: 200
 };
 
 export { state };
