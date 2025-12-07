@@ -20,10 +20,9 @@ function fireProjectile() {
 // FIRE RATE LIMITER (COOLDOWN)
 // ==============================
   const now = performance.now();
-  const cooldown = 200; // milliseconds between shots
 
-  if (now - state.lastShotTime < cooldown) {
-    return; // still cooling down → no shot
+  if (now - state.lastShotTime < state.shotCooldown) {
+  return; // cooling down
   }
 
   state.lastShotTime = now;
