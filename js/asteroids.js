@@ -153,9 +153,9 @@ function respawnAsteroids(minAmount = 3) {
 
   const present = document.querySelectorAll(".asteroid").length;
 
-  // When asteroid count gets too low, spawn a *full new wave*
+  // When asteroid count gets too low, spawn full wave
   if (present < minAmount) {
-    spawnAsteroids();   // no parameter → use your default (18 to 33)
+    spawnAsteroids();   // no parameter → use default
   }
 }
 
