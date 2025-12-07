@@ -12,9 +12,14 @@ import { saveHighScore, updateHighScoresDisplay} from "./highscores.js";
 function initInputHandlers() {
   // Keyboard
   document.addEventListener("keydown", e => {
+
+    if (e.code === "Space") {
+      e.preventDefault(), // prevents space from toggling audio off and on
+      fireProjectile();
+    }
+
     state.keys[e.key.toLowerCase()] = true;
 
-    if (e.code === "Space") fireProjectile();
     if (e.key === "Escape") backToMenu();
   });
 
