@@ -25,6 +25,19 @@ function spawnAsteroids(numAsteroids = Math.floor(Math.random() * 6) + 8) {
     asteroidWrapper.style.width = size + "px";
     asteroidWrapper.style.height = size + "px";
 
+    // --- NEW: assign health based on size ---
+    // tweak thresholds if you want tougher/easier rocks
+    let health = 1;
+    if (size >= 210) {
+      health = 3;        // biggest rocks → 3 hits
+    } else if (size >= 175) {
+      health = 2;        // medium rocks → 2 hits
+    } else {
+      health = 1;        // small rocks → 1 hit (same as before)
+    }
+    asteroidWrapper.dataset.health = String(health);
+    // ----------------------------------------
+
     // Spawn at a random edge of the screen
     const edge = Math.floor(Math.random() * 4);
     let x, y;
@@ -106,17 +119,18 @@ function updateAsteroids(deltaSec = 0) {
     const height = window.innerHeight;
     const size = asteroid.dataset.size;
 
-    if (x < -size * 0.50) 
+    // NOTE: you mentioned changing 0.75 → 0.50. That’s reflected here.
+    if (x < -size * 0.5) 
       x = width;
 
     if (x > width)        
-      x = -size * 0.50;
+      x = -size * 0.5;
 
-    if (y < -size * 0.50) 
+    if (y < -size * 0.5) 
       y = height;
 
     if (y > height)       
-      y = -size * 0.50;
+      y = -size * 0.5;
 
     asteroid.style.left = x + "px";
     asteroid.style.top = y + "px";

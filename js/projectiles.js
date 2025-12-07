@@ -79,6 +79,7 @@ function updateProjectiles(deltaSec) {
 // Check for collisions between projectiles and asteroids
 function checkProjectileCollisions() {
   const asteroids = document.querySelectorAll(".asteroid-hitbox");
+
   [...state.projectiles].forEach(p => {
     const pRect = p.getBoundingClientRect();
 
@@ -92,25 +93,35 @@ function checkProjectileCollisions() {
         pRect.bottom > aRect.top;
 
       if (hit) {
+        // Remove projectile
         p.remove();
         state.projectiles = state.projectiles.filter(b => b !== p);
 
         const asteroidWrap = a.closest(".asteroid");
         if (asteroidWrap) {
-          const asteroidImg = asteroidWrap.querySelector(".asteroid-img");
-          if (asteroidImg) {
-            const newImg = asteroidImg.cloneNode();
-            newImg.src = `assets/asteroids/explode.gif?${Date.now()}`;
-            asteroidImg.replaceWith(newImg);
-          }
-          const hitbox = asteroidWrap.querySelector(".asteroid-hitbox");
-          if (hitbox) hitbox.remove();
-          setTimeout(() => asteroidWrap.remove(), 700);
-        }
+          // ---------- NEW: multi-hit health system ----------
+          let health = parseInt(asteroidWrap.dataset.health || "1", 10);
+          health--;
+          asteroidWrap.dataset.health = String(health);
 
-        let score = parseInt(scoreElem.textContent) || 0;
-        score += projectileDamage;
-        scoreElem.textContent = score;
+          if (health <= 0) {
+            // Only when asteroid "dies" do we explode & remove & score
+            const asteroidImg = asteroidWrap.querySelector(".asteroid-img");
+            if (asteroidImg) {
+              const newImg = asteroidImg.cloneNode();
+              newImg.src = `assets/asteroids/explode.gif?${Date.now()}`;
+              asteroidImg.replaceWith(newImg);
+            }
+            const hitbox = asteroidWrap.querySelector(".asteroid-hitbox");
+            if (hitbox) hitbox.remove();
+            setTimeout(() => asteroidWrap.remove(), 700);
+
+            // Score awarded on destruction, not each hit
+            let score = parseInt(scoreElem.textContent) || 0;
+            score += projectileDamage;
+            scoreElem.textContent = score;
+          }
+        }
       }
     });
   });
