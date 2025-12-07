@@ -6,7 +6,7 @@
 let asteroidsActive = true;
 
 // Function to spawn a specified number of asteroids
-function spawnAsteroids(numAsteroids = Math.floor(Math.random() * 6) + 8) {
+function spawnAsteroids(numAsteroids = Math.floor(Math.random() * 14) + 16) {
   // Do nothing if asteroids are not active
   if (!asteroidsActive) return;
 
@@ -148,11 +148,14 @@ function updateAsteroids(deltaSec = 0) {
 }
 
 // Function to respawn asteroids if below a minimum amount
-function respawnAsteroids(minAmount = 2) {
+function respawnAsteroids(minAmount = 10) {
   if (!asteroidsActive) return;
+
   const present = document.querySelectorAll(".asteroid").length;
+
+  // When asteroid count gets too low, spawn a *full new wave*
   if (present < minAmount) {
-    spawnAsteroids(minAmount - present);
+    spawnAsteroids();   // no parameter → use your default (18 to 33)
   }
 }
 

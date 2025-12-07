@@ -27,14 +27,14 @@ function gameLoop(timestamp) {
   checkProjectileCollisions();
   checkProjectileCollisionsWithUfos();
   updateAsteroids(deltaSec);
-  respawnAsteroids(2);
+  respawnAsteroids(10);
 
   // ========================================================
   // UFOs unlock ONLY when the score reaches 5000+
   // ========================================================
   const currentScore = parseInt(scoreElem.textContent) || 0;
 
-  if (currentScore >= 5000) {
+  if (currentScore >= 2500) {
     activateUfos(true);
     updateUfos(deltaSec);
     respawnUfos(1);
