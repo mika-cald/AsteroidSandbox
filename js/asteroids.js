@@ -6,7 +6,7 @@
 let asteroidsActive = true;
 
 // Function to spawn a specified number of asteroids
-function spawnAsteroids(numAsteroids = Math.floor(Math.random() * 14) + 16) {
+function spawnAsteroids(numAsteroids = Math.floor(Math.random() * 12) + 14) {
   // Do nothing if asteroids are not active
   if (!asteroidsActive) return;
 
@@ -48,21 +48,21 @@ function spawnAsteroids(numAsteroids = Math.floor(Math.random() * 14) + 16) {
   switch (edge) {
     case 0: // top
       x = Math.random() * window.innerWidth;
-      y = -size * 4; // further above screen
+      y = -size * 6; // further above screen
       break;
 
     case 1: // right
-      x = window.innerWidth + size * 4;
+      x = window.innerWidth + size * 6;
       y = Math.random() * window.innerHeight;
       break;
 
     case 2: // bottom
       x = Math.random() * window.innerWidth;
-      y = window.innerHeight + size * 4;
+      y = window.innerHeight + size * 6;
       break;
 
     case 3: // left
-      x = -size * 4;
+      x = -size * 6;
       y = Math.random() * window.innerHeight;
       break;
 }
