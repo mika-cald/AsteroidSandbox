@@ -120,17 +120,17 @@ function updateAsteroids(deltaSec = 0) {
     const height = window.innerHeight;
     const size = asteroid.dataset.size;
 
-    if (x < -size * 0.6) 
+    if (x < -size * 0.7) 
       x = width;
 
     if (x > width)        
-      x = -size * 0.6;
+      x = -size * 0.7;
 
-    if (y < -size * 0.6) 
+    if (y < -size * 0.7) 
       y = height;
 
     if (y > height)       
-      y = -size * 0.6;
+      y = -size * 0.7;
 
     asteroid.style.left = x + "px";
     asteroid.style.top = y + "px";
@@ -148,7 +148,7 @@ function updateAsteroids(deltaSec = 0) {
 }
 
 // Function to respawn asteroids if below a minimum amount
-function respawnAsteroids(minAmount = 7) {
+function respawnAsteroids(minAmount = 3) {
   if (!asteroidsActive) return;
 
   const present = document.querySelectorAll(".asteroid").length;

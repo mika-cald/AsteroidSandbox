@@ -27,7 +27,7 @@ function gameLoop(timestamp) {
   checkProjectileCollisions();
   checkProjectileCollisionsWithUfos();
   updateAsteroids(deltaSec);
-  respawnAsteroids(7);
+  respawnAsteroids(3);
 
   // ========================================================
   // UFOs unlock ONLY when the score reaches 5000+
