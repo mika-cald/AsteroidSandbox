@@ -30,7 +30,7 @@ function gameLoop(timestamp) {
   respawnAsteroids(7);
 
   // ========================================================
-  // UFOs unlock ONLY when the score reaches 5000+
+  // UFOs unlock ONLY when the score reaches 2500
   // ========================================================
   const currentScore = parseInt(scoreElem.textContent) || 0;
 
