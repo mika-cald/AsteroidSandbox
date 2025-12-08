@@ -7,9 +7,13 @@ import { state } from "./gameState.js";
 import { scoreElem } from "./ui.js";
 
 // Projectile properties
+const projectileType = {
+  name: "rocket",
+  damage: 100 // points per hit
+}
+
 const projectileSpeed = 800; // pixels per second
 const projectileLifetime = 1500; // milliseconds
-const projectileDamage = 100; // points per hit
 
 // Fires a new projectile from the ship's position
 function fireProjectile() {
@@ -33,8 +37,8 @@ function fireProjectile() {
 
   // Create and append projectile image
   const projectileImg = document.createElement("img");
-  projectileImg.src = "assets/player/projectiles/rocket.gif"; 
-  projectileImg.className = "asteroid-img";
+  projectileImg.src = `assets/player/projectiles/${projectileType.name}.gif`; 
+  projectileImg.className = "projectile-img";
   projectile.appendChild(projectileImg);
 
   // Calculate projectile starting position
@@ -138,7 +142,7 @@ function checkProjectileCollisions() {
 
             // Score awarded on destruction, not each hit
             let score = parseInt(scoreElem.textContent) || 0;
-            score += projectileDamage;
+            score += projectileType.damage;
             scoreElem.textContent = score;
           }
         }
@@ -201,7 +205,7 @@ function checkProjectileCollisionsWithUfos() {
 
         // Update score for hitting UFO
         let score = parseInt(scoreElem.textContent) || 0;
-        score += projectileDamage + 300;
+        score += projectileType.damage + 300;
         scoreElem.textContent = score;
       }
     });
@@ -209,6 +213,7 @@ function checkProjectileCollisionsWithUfos() {
 }
 
 export {
+  projectileType,
   fireProjectile,
   updateProjectiles,
   checkProjectileCollisions,

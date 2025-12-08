@@ -11,7 +11,7 @@ function spawnUfos() {
   if (!ufosActive) return;
 
   // Number of UFOs to spawn
-  const numUfos = 3;
+  const numUfos = 1;
 
   // Create each UFO
   for (let i = 0; i < numUfos; i++) {
@@ -20,7 +20,7 @@ function spawnUfos() {
     ufoWrapper.dataset.health = 1;
     ufoWrapper.style.position = "absolute";
 
-    const size = 75;
+    const size = 100;
     ufoWrapper.dataset.size = size;
 
     const edge = Math.floor(Math.random() * 4);
@@ -102,7 +102,7 @@ function updateUfos(deltaSec = 0) {
     const dist = Math.hypot(dx, dy);
 
     // Move towards the ship
-    if (dist > 0.1) {
+    if (dist > 50) {
       x += (dx / dist) * speed * deltaSec;
       y += (dy / dist) * speed * deltaSec;
     } else {
@@ -150,7 +150,7 @@ function updateUfos(deltaSec = 0) {
 }
 
 // Ensure a minimum number of UFOs are present
-function respawnUfos(minAmount = 1) {
+function respawnUfos(minAmount = 0) {
   if (!ufosActive) return;
   const present = document.querySelectorAll(".ufo").length;
   if (present < minAmount) spawnUfos();

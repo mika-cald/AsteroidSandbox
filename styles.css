@@ -128,6 +128,8 @@ h3 {
     left: -37.5px;
 }
 
+
+
 /* Score */
 #score-display {
   position: absolute;
@@ -308,4 +310,11 @@ h3 {
     transition: transform 1s ease, opacity 1s ease;
     transform: scale(3);
     opacity: 0;
+}
+
+.item {
+    position: absolute;
+    width: 50px;
+    height: 50px;
+    /* pointer-events: none; */
 }
