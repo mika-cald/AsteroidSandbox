@@ -1,0 +1,14 @@
+# Node.js dependencies
+node_modules/
+
+# Webpack build output
+dist/
+
+# Logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Temporary system files
+.DS_Store
+Thumbs.db

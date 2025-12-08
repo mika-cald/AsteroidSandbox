@@ -47,6 +47,9 @@
       <div class="menu">
         <button class="btn btn-transparent btn-lg play-btn">Play</button>
         <button class="btn btn-transparent btn-lg high-scores-btn">High Scores</button>
+        <div id="player-count" style="color:white; font-size:1.2rem; margin-top:10px;">
+          Players Online: connecting...
+        </div>
       </div>
     </div>
 
@@ -97,7 +100,25 @@
     </div>
 
     <!-- Module Entrypoint -->
-    <script type="module" src="js/main.js"></script>
+    <script src="dist/bundle.js"></script>
 
+    <script>
+      const ws = new WebSocket("ws://localhost:8080");
+
+      ws.onmessage = (event) => {
+        const data = JSON.parse(event.data);
+        document.getElementById("player-count").textContent =
+        `Players Online: ${data.playersOnline}`;
+      };
+
+      ws.onopen = () => {
+        console.log("Connected to WebSocket server");
+      };
+
+      ws.onerror = () => {
+        document.getElementById("player-count").textContent =
+        "Players Online: unavailable";
+      };
+    </script>
   </body>
 </html>
