@@ -26,7 +26,6 @@ function fireProjectile() {
   }
 
   state.lastShotTime = now; // Update last shot time
-  // ===============================
 
   // Creates projectile element
   const projectile = document.createElement("div");
@@ -73,8 +72,8 @@ function fireProjectile() {
 // Update positions of all projectiles
 function updateProjectiles(deltaSec) {
   state.projectiles.forEach(p => {
-    let x = parseFloat(p.style.left);
-    let y = parseFloat(p.style.top);
+    let x = parseFloat(p.style.left); // current x position
+    let y = parseFloat(p.style.top); // current y position
 
     // Update position based on velocity and time delta
     x += parseFloat(p.dataset.velX) * deltaSec;
