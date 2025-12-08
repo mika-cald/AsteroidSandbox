@@ -26,6 +26,7 @@ export const gameRestart = document.getElementById("restart-game");
 // Ship & engine
 export const ship = document.getElementById("ship");
 export const engine = document.getElementById("engine");
+export const effect = document.getElementById("effect");
 
 // Audio toggle UI
 export const musicToggle = document.getElementById("musicToggle");

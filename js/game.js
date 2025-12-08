@@ -3,7 +3,7 @@
 // =====================================================================
 
 import { state } from "./gameState.js";
-import { menuScreen, highScoresScreen, scoreDisplay, livesDisplay, gameRestart, ship, engine, endScreen, finalScoreElem, nicknameInput, scoreElem } from "./ui.js";
+import { menuScreen, highScoresScreen, scoreDisplay, livesDisplay, gameRestart, ship, engine, effect, endScreen, finalScoreElem, nicknameInput, scoreElem } from "./ui.js";
 import { updateLives } from "./ui.js";
 import { updateShip } from "./ship.js";
 import { updateProjectiles, checkProjectileCollisions, checkProjectileCollisionsWithUfos } from "./projectiles.js";
@@ -11,6 +11,7 @@ import { spawnAsteroids, updateAsteroids, respawnAsteroids, clearAsteroids, acti
 import { spawnUfos, updateUfos, respawnUfos, clearUfos, activateUfos } from "./ufos.js";
 import { collisionWithAsteroids, collisionWithUfos } from "./collision.js";
 import { crossFadeAudio, musicEnabled, menuTrack, gameTrack } from "./audio.js";
+import { updateItems, removeItem, resetItems } from "./item.js";
 
 const MAX_DELTA = 0.05;
 
@@ -28,6 +29,7 @@ function gameLoop(timestamp) {
   checkProjectileCollisionsWithUfos();
   updateAsteroids(deltaSec);
   respawnAsteroids(3);
+  updateItems();
 
   // ========================================================
   // UFOs unlock ONLY when the score reaches 5000+
@@ -99,9 +101,13 @@ function shipDestroyed() {
   clearAsteroids();
   activateUfos(false);
   clearUfos();
+  removeItem();
+  resetItems();
 
   ship.style.display = "none";
   engine.style.display = "none";
+  effect.style.display = "none";
+
 
   endScreen.style.display = "block";
   scoreDisplay.style.display = "none";
@@ -117,6 +123,8 @@ function resetGame() {
   clearAsteroids();
   activateUfos(true);
   clearUfos();
+  removeItem();
+  resetItems();
   state.lastTime = 0;
   state.gameRunning = false;
   state.isInvincible = false;
@@ -134,6 +142,8 @@ function resetGame() {
 
   ship.style.display = "none";
   engine.style.display = "none";
+  effect.style.display = "none";
+
 
   scoreDisplay.style.display = "none";
   livesDisplay.style.display = "none";
@@ -150,6 +160,7 @@ function startGame() {
 
   ship.style.display = "block";
   engine.style.display = "block";
+  effect.style.display = "none";
   scoreDisplay.style.display = "block";
   livesDisplay.style.display = "block";
 
@@ -164,7 +175,10 @@ function startGame() {
 
   activateUfos(true);
   clearUfos();
-  spawnUfos();
+  spawnUfos()
+  removeItem();
+  resetItems();
+
 
   state.projectiles = [];
   state.lastTime = 0;
@@ -186,6 +200,8 @@ function backToMenu() {
   clearAsteroids();
   activateUfos(false);
   clearUfos();
+  removeItem();
+  resetItems();
   state.lastTime = 0;
   state.gameRunning  = false;
   state.isInvincible = false;
@@ -202,6 +218,7 @@ function backToMenu() {
 
   ship.style.display = "none";
   engine.style.display = "none";
+  effect.style.display = "none";
   scoreDisplay.style.display = "none";
   livesDisplay.style.display = "none";
 
@@ -239,6 +256,7 @@ function goToMenu() {
   menuScreen.style.display = "block";
   ship.style.display = "none";
   engine.style.display = "none";
+  effect.style.display = "none";
   scoreDisplay.style.display = "none";
   livesDisplay.style.display = "none";
 

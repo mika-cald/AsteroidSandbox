@@ -6,7 +6,12 @@ import { state } from "./gameState.js";
 import { ship, engine } from "./ui.js";
 
 // Ship physics constants
-const thrust = 600; 
+const engineType = {
+  name: "base",
+  thrust: 600
+}
+
+// const thrust = 600; 
 const rotationSpeed = 180;
 const friction = 0.98;
 
@@ -26,16 +31,16 @@ function updateShip(deltaSec = 0) {
     // Thrust
     if (state.keys["w"]) {
       const rad = state.angle * Math.PI / 180;
-      state.velX += Math.sin(rad) * thrust * deltaSec;
-      state.velY -= Math.cos(rad) * thrust * deltaSec;
+      state.velX += Math.sin(rad) * engineType.thrust * deltaSec;
+      state.velY -= Math.cos(rad) * engineType.thrust * deltaSec;
 
       if (spriteChange !== 1) {
-        engineImg.src = "assets/player/engines/effects/base-power.gif";
+        engineImg.src = `assets/player/engines/${engineType.name}-power.gif`;
         spriteChange = 1;
       }
     } else {
       if (spriteChange !== 0) {
-        engineImg.src = "assets/player/engines/effects/base-idle.gif";
+        engineImg.src = `assets/player/engines/${engineType.name}-idle.gif`;
         spriteChange = 0;
       }
     }
@@ -63,4 +68,4 @@ function updateShip(deltaSec = 0) {
   ship.style.transform = `translate(-50%, -50%) rotate(${state.angle}deg)`;
 }
 
-export { updateShip };
+export { engineType, updateShip };

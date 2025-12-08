@@ -1,6 +1,6 @@
-// ======================== COLLISION MODULE ==========================
-// Handles collision detection between the ship and asteroids or UFOs.
-// ====================================================================
+// ======================== COLLISION MODULE =====================
+// Handles collision detection between the ship and other objects.
+// ===============================================================
 
 import { ship } from "./ui.js";
 
@@ -39,8 +39,21 @@ function collisionWithUfos() {
   return false;
 }
 
+// 
+function collisionWithItems() {
+  const shipRect = ship.getBoundingClientRect();
+  const hitboxes = document.querySelectorAll(".item-hitbox");
+
+  for (const box of hitboxes) {
+    const rect = box.getBoundingClientRect();
+    if (rectsOverlap(shipRect, rect)) return true;
+  }
+  return false;
+}
+
 export {
   rectsOverlap,
   collisionWithAsteroids,
   collisionWithUfos,
+  collisionWithItems,
 };
