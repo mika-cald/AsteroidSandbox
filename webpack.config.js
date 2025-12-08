@@ -15,12 +15,12 @@ export default {
   module: {
     rules: [
       {
-        test: /\.(js|jsx)$/,
+        test: /\.js$/,
         exclude: /node_modules/,
         use: {
           loader: "babel-loader",
           options: {
-            presets: ["@babel/preset-env", "@babel/preset-react"],
+            presets: ["@babel/preset-env"],
           },
         },
       },
@@ -31,7 +31,7 @@ export default {
     ],
   },
   resolve: {
-    extensions: [".js", ".jsx"],
+    extensions: [".js"],
   },
   devtool: "source-map",
 };
