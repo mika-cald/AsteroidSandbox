@@ -39,7 +39,7 @@ function collisionWithUfos() {
   return false;
 }
 
-// 
+// Check for collision between ship and any items
 function collisionWithItems() {
   const shipRect = ship.getBoundingClientRect();
   const hitboxes = document.querySelectorAll(".item-hitbox");
