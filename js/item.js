@@ -16,33 +16,41 @@ let effectDuration = 5000;
 let spawnDelay = 3000;
 let spawnTimer = null;
 
+// Possible item types
 const itemTypes = ["engine", "shield", "weapon"];
 
+// Spawns a random item on the screen at a random position
 function spawnRandomItem() {
     if (!canSpawn || effectActive || activeItem || !state.gameRunning) return;
 
+    // Select random item type
     const randomItem = itemTypes[Math.floor(Math.random() * itemTypes.length)];
 
+    // Create item element
     const item = document.createElement("img");
     item.src = `assets/items/${randomItem}.gif`;
     item.classList.add("item", "item-hitbox");
     item.dataset.type = randomItem;
 
+    // Random position within viewport bounds
     const maxX = window.innerWidth - 50;
     const maxY = window.innerHeight - 50;
 
+    // Set random position
     item.style.left = `${Math.random() * maxX}px`;
     item.style.top = `${Math.random() * maxY}px`;
 
+    // Add item to the DOM
     activeItem = item;
     document.body.appendChild(item);
 
+    // Auto-remove item after 8 seconds if not collected
     setTimeout(() => {
         if (activeItem === item) removeItem();
     }, 8000);
 }
 
-    
+// Removes the active item from the game
 function removeItem() {
     if (activeItem) {
         activeItem.remove();
@@ -50,6 +58,7 @@ function removeItem() {
     }
 }
 
+// Resets all item effects and states to default
 function resetItems() {
     engineType.name = "base";
     engineType.thrust = 600;
@@ -57,17 +66,20 @@ function resetItems() {
     projectileType.name = "rocket";
     projectileType.damage = 100;
 
+    // Clear any existing spawn timers
     if (spawnTimer) clearTimeout(spawnTimer);
     
     activeItem = null;
     canSpawn = false;
     effectActive = false;
 
+    // Allow spawning after delay
     spawnTimer = setTimeout(() => {
         if (state.gameRunning) canSpawn = true;
     }, spawnDelay);
 }
 
+// Applies the effect of the collected item
 function useItem(item) {
     const type = item.dataset.type;
     effectActive = true;
@@ -80,6 +92,7 @@ function useItem(item) {
 
     removeItem();
 
+    // Apply item effect
     switch (type) {
         case "engine":
             engineType.name = "supercharged";
@@ -96,6 +109,7 @@ function useItem(item) {
             break;
     }
 
+    // Remove effect after duration
     setTimeout(() => {
         img.src = "";
         img.style.display = "none";
@@ -103,8 +117,10 @@ function useItem(item) {
 
         canSpawn = false;
 
+        // Clear existing spawn timer
         if (spawnTimer) clearTimeout(spawnTimer);
 
+        // Revert item effects
         switch (type) {
             case "engine":
                 engineType.name = "base";
@@ -120,7 +136,8 @@ function useItem(item) {
                 projectileType.damage = 100;
                 break;
         }
-
+        
+        // Allow new item spawn after delay
         spawnTimer = setTimeout(() => {
             if (state.gameRunning) canSpawn = true;
         }, spawnDelay);
@@ -128,7 +145,7 @@ function useItem(item) {
     }, effectDuration);
 }
 
-
+// Updates item state each frame
 function updateItems() {
     if (!state.gameRunning) {
         removeItem();
@@ -150,6 +167,7 @@ function updateItems() {
     }
 }
 
+// Initial spawn allowance after 3 seconds
 setTimeout(() => {
     canSpawn = true;
 }, 3000);
