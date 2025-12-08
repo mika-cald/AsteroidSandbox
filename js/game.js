@@ -13,27 +13,25 @@ import { collisionWithAsteroids, collisionWithUfos } from "./collision.js";
 import { crossFadeAudio, musicEnabled, menuTrack, gameTrack } from "./audio.js";
 import { updateItems, removeItem, resetItems } from "./item.js";
 
-const MAX_DELTA = 0.05;
+const MAX_DELTA = 0.05; // Cap delta time to avoid large jumps
 
 // Main game loop
 function gameLoop(timestamp) {
-  if (state.lastTime === 0) state.lastTime = timestamp;
-  let deltaSec = (timestamp - state.lastTime) / 1000;
-  state.lastTime = timestamp;
+  if (state.lastTime === 0) state.lastTime = timestamp; // Initialize lastTime on first frame
+  let deltaSec = (timestamp - state.lastTime) / 1000; // Convert to seconds
+  state.lastTime = timestamp; // Update lastTime
 
-  if (deltaSec > MAX_DELTA) deltaSec = MAX_DELTA;
+  if (deltaSec > MAX_DELTA) deltaSec = MAX_DELTA; // Cap delta to avoid large jumps
 
-  updateShip(deltaSec);
-  updateProjectiles(deltaSec);
-  checkProjectileCollisions();
-  checkProjectileCollisionsWithUfos();
-  updateAsteroids(deltaSec);
-  respawnAsteroids(3);
+  updateShip(deltaSec); // Update ship position and state
+  updateProjectiles(deltaSec); // Update projectiles
+  checkProjectileCollisions(); // Check projectile collisions with asteroids
+  checkProjectileCollisionsWithUfos(); // Check projectile collisions with UFOs
+  updateAsteroids(deltaSec); // Update asteroids
+  respawnAsteroids(3); // Ensure minimum asteroids
   updateItems();
 
-  // ========================================================
-  // UFOs unlock ONLY when the score reaches 5000+
-  // ========================================================
+  // ===== UFOs unlock ONLY when the score reaches 2500 =====
   const currentScore = parseInt(scoreElem.textContent) || 0;
 
   if (currentScore >= 2500) {
@@ -42,31 +40,34 @@ function gameLoop(timestamp) {
     respawnUfos(1);
   }
 
-  if (collisionWithAsteroids() || collisionWithUfos()) handleCollision();
+  if (collisionWithAsteroids() || collisionWithUfos()) handleCollision(); // Handle ship collisions
 
-  state.loopId = requestAnimationFrame(gameLoop);
+  state.loopId = requestAnimationFrame(gameLoop); // Request next frame
 }
 
 // Handle ship collision with asteroid or UFO
 function handleCollision() {
-  if (state.isInvincible) return;
-  state.isInvincible = true;
+  if (state.isInvincible) return; 
+  state.isInvincible = true; // Temporary invincibility after hit
 
-  state.lives = Math.max(0, state.lives - 1);
+  state.lives = Math.max(0, state.lives - 1); // Decrease lives but not below 0
   updateLives();
 
+  // Hit feedback animation
   const img = ship.querySelector("img");
   img.style.filter =
     "brightness(0) saturate(100%) invert(38%) sepia(90%) saturate(5342%) hue-rotate(343deg)";
   setTimeout(() => (img.style.filter = "none"), 300);
 
+  // Screen shake effect
   document.body.style.animation = "shake 0.15s";
   setTimeout(() => (document.body.style.animation = ""), 150);
 
+  // Check for game over
   if (state.lives === 0) {
     deathAnimation();
   } else {
-    setTimeout(() => (state.isInvincible = false), 1200);
+    setTimeout(() => (state.isInvincible = false), 1200); // End invincibility after delay
   }
 }
 
@@ -75,6 +76,7 @@ function deathAnimation() {
   ship.classList.add("ship-death-zoom");
   document.getElementById("death-fade").style.opacity = 1;
 
+  // Delay to allow animation to play
   setTimeout(() => {
     cancelAnimationFrame(state.loopId);
     state.gameRunning = false;
@@ -95,9 +97,9 @@ function shipDestroyed() {
   state.gameRunning = false;
   state.isInvincible = false;
 
-  Object.keys(state.keys).forEach(k => (state.keys[k] = false));
+  Object.keys(state.keys).forEach(k => (state.keys[k] = false)); // Reset key states
 
-  activateAsteroids(false);
+  activateAsteroids(false); 
   clearAsteroids();
   activateUfos(false);
   clearUfos();

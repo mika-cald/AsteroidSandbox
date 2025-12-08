@@ -10,24 +10,25 @@ import { saveHighScore, updateHighScoresDisplay} from "./highscores.js";
 
 // Initialize input event handlers
 function initInputHandlers() {
-  // Keyboard
+  // Keydown event to track key presses
   document.addEventListener("keydown", e => {
 
     if (e.code === "Space") {
       e.preventDefault(), // prevents space from toggling audio off and on
-      fireProjectile();
+      fireProjectile(); // Fire projectile on spacebar press
     }
 
-    state.keys[e.key.toLowerCase()] = true;
+    state.keys[e.key.toLowerCase()] = true; // Track key state
 
-    if (e.key === "Escape") backToMenu();
+    if (e.key === "Escape") backToMenu(); // Escape key to return to menu
   });
 
+  // Keyup event to track key releases
   document.addEventListener("keyup", e => {
     state.keys[e.key.toLowerCase()] = false;
   });
 
-  // Buttons
+  // ============ Buttons ============
   playBtn.addEventListener("click", startGame);
   rstBtn.addEventListener("click", resetGame);
 
