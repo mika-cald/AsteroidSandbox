@@ -112,13 +112,13 @@ function checkProjectileCollisions() {
 
         const asteroidWrap = a.closest(".asteroid");
         if (asteroidWrap) {
-          // ---------- NEW: multi-hit health system ----------
+          // multi-hit health system 
           let health = parseInt(asteroidWrap.dataset.health || "1", 10);
           health--;
           asteroidWrap.dataset.health = String(health);
 
           if (health <= 0) {
-            // Only when asteroid "dies" do we explode & remove & score
+            // Only when the asteroid is destroyed does the asteroid explode and score is awarded
             const asteroidImg = asteroidWrap.querySelector(".asteroid-img");
             if (asteroidImg) {
               const newImg = asteroidImg.cloneNode();

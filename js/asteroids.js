@@ -108,6 +108,7 @@ function updateAsteroids(deltaSec = 0) {
     let x = parseFloat(asteroid.style.left);
     let y = parseFloat(asteroid.style.top);
 
+    // Retrieve velocity from dataset
     const velX = parseFloat(asteroid.dataset.velX);
     const velY = parseFloat(asteroid.dataset.velY);
 
@@ -115,7 +116,7 @@ function updateAsteroids(deltaSec = 0) {
     x += velX * deltaSec;
     y += velY * deltaSec;
 
-    // Screen wrapping logic
+    // ======== Screen wrapping logic ========
     const width = window.innerWidth;
     const height = window.innerHeight;
     const size = asteroid.dataset.size;
@@ -155,7 +156,7 @@ function respawnAsteroids(minAmount = 3) {
 
   // When asteroid count gets too low, spawn full wave
   if (present < minAmount) {
-    spawnAsteroids();   // no parameter → use default
+    spawnAsteroids();   // no parameter, use default
   }
 }
 

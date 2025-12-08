@@ -47,7 +47,7 @@ function updateShip(deltaSec = 0) {
   state.velX *= Math.pow(friction, deltaSec * 60);
   state.velY *= Math.pow(friction, deltaSec * 60);
 
-  // Move
+  // Update position
   state.shipX += state.velX * deltaSec;
   state.shipY += state.velY * deltaSec;
 
