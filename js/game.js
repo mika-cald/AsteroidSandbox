@@ -11,6 +11,7 @@ import { spawnAsteroids, updateAsteroids, respawnAsteroids, clearAsteroids, acti
 import { spawnUfos, updateUfos, respawnUfos, clearUfos, activateUfos } from "./ufos.js";
 import { collisionWithAsteroids, collisionWithUfos } from "./collision.js";
 import { crossFadeAudio, musicEnabled, menuTrack, gameTrack } from "./audio.js";
+import { updateUfoProjectiles, collisionWithUfoProjectiles } from "./ufoProjectiles.js";
 
 const MAX_DELTA = 0.05; // Cap delta time to avoid large jumps
 
@@ -36,9 +37,12 @@ function gameLoop(timestamp) {
     activateUfos(true);
     updateUfos(deltaSec);
     respawnUfos(1);
+    updateUfoProjectiles(deltaSec);
   }
 
-  if (collisionWithAsteroids() || collisionWithUfos()) handleCollision(); // Handle ship collisions
+  if (collisionWithAsteroids() || collisionWithUfos() || collisionWithUfoProjectiles()) {
+    handleCollision(); // Handle ship collisions
+  }
 
   state.loopId = requestAnimationFrame(gameLoop); // Request next frame
 }
@@ -247,4 +251,4 @@ function goToMenu() {
   resetGameState();
 }
 
-export { gameLoop, resetGame, startGame, backToMenu, resetGameState, goToMenu };
+export { gameLoop, resetGame, startGame, backToMenu, resetGameState, goToMenu, handleCollision };

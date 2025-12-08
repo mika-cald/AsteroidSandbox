@@ -3,6 +3,7 @@
 // =========================================================================
 
 import { state } from "./gameState.js";
+import { fireUfoProjectile } from "./ufoProjectiles.js";
 
 let ufosActive = true;
 
@@ -146,6 +147,14 @@ function updateUfos(deltaSec = 0) {
 
     ufo.style.left = x + "px";
     ufo.style.top  = y + "px";
+
+    // UFO Shooting Logic
+    if (!ufo.dataset.lastShotTime) ufo.dataset.lastShotTime = 0;
+    const now = performance.now();
+    if (now - ufo.dataset.lastShotTime > 3000) { // fire every 3s
+      fireUfoProjectile(ufo);
+      ufo.dataset.lastShotTime = now;
+    }
   });
 }
 
@@ -166,4 +175,4 @@ function activateUfos(state) {
   ufosActive = state;
 }
 
-export { spawnUfos, updateUfos, respawnUfos, clearUfos, activateUfos};
+export { spawnUfos, updateUfos, respawnUfos, clearUfos, activateUfos };
